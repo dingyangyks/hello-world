@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+		    ul{
+		    	list-style: none;
+		    }
+		   /*水平居中css*/
+			#div1{
+				width: 100px;
+				height: 50px;
+				border: 1px solid red;
+				margin: 0 auto;
+				}
+			
+			#p1{
+				text-align: center;
+				}
+			#ul1{
+				display: inline;/*转化为行内元素  但破坏了块状元素的性质*/
+				text-align: center;
+			}
+			
+			#div2{
+				
+				position: relative;
+				float: left;
+				left: 50%;
+			}
+			#ul2{
+				margin: 0;
+				padding: 0;
+				position: relative;
+                left: -50%;
+			}
+			#tab{
+				 margin: 0 auto;
+			}
+			#tab ul{
+				padding: 0;
+			}
+			
+		/*垂直居中css*/
+		
+			#div3{
+				height: 100px;
+				background-color: #FFE4C4;
+				line-height:100px ;/*line-height: 顾名思义，行高（行间距） 必须和父辈元素高度一致*/
+			}
+			#div4{
+			height: 300px;
+			background-color: cadetblue;
+			display:table-cell ;
+			vertical-align:middle/*兼容性不好 破坏了原有块状元素的性质*/
+		}
+		   
+		    #tab1 td{/*因为 td 标签默认情况下就默认设置了 vertical-align 为 middle，*/
+		    	height:500px;background:#ccc
+		    }
+
+		</style>
+	</head>
+	<body>
+		<!--水平居中-->
+		<div id="div1">
+			顶宽块状元素居中
+		</div>
+		
+		<p id="p1">行内元素居中</p>
+		
+		<ul id="ul1">
+			<li>不定宽块状元素居中1</li>
+		</ul>
+		
+		<div id="div2">
+			<ul id="ul2">
+			   <li>不定宽块状元素居中2</li>
+			</ul>
+		</div>
+		
+		<table id="tab"><!--必须全部使用table tbody tr td-->
+			<tbody>
+				<tr>
+					<td>
+						<ul>
+							<ll>用table居中不定宽块级元素</ll>
+						</ul>
+					</td>
+				</tr>
+			</tbody>
+			
+		</table>
+		
+		<!--垂直居中-->
+		<div id="div3">
+			父元素定高单行文本
+		</div>
+		
+		<div id="div4">
+			<p>父元素定高的多行文本</p>
+			<p>父元素定高的多行文本</p>
+			<p>父元素定高的多行文本</p>
+		</div>
+		
+		<table id="tab1">
+			<tbody>
+				<tr>
+					<td>
+						<p>父元素定高的多行文本</p>
+						<p>父元素定高的多行文本</p>
+						<p>父元素定高的多行文本</p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>
