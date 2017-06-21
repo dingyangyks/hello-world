@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+	       
+			.contact{
+				width: 700px;
+				height: auto;
+				background-color: #dac1c9;
+				margin: 20px auto;
+				padding:2px;
+			}
+			ul{ 
+			    padding:0;
+				list-style:none;
+				text-align:center;
+				font-size: 22px;
+			}
+	        #userInput label{
+	        	font-size:22px;
+	        	display:inline-block;
+	        	width:208px;
+	        	text-align:right;
+	        }
+	        #userInput p{
+	        	width:500px;
+	        	text-align:left;
+	        	padding-left:359px;
+	        	margin:5px;
+	        	font-size:15px;
+	        	color:#fff
+	        }
+		
+		    #choose label{
+				font-size:22px;
+	        	display:inline-block;
+	        	width:264px;
+	        	text-align:right;
+	        }
+			#choose div{
+				display: inline-block;
+				width: 260px;
+				text-align:left;
+			}
+            #choose li{
+				margin: 10px 0 0 10px;
+			}
+			textarea{
+				vertical-align:top
+			}
+			#btn{
+				text-align: center;
+				margin-bottom: 5px; 
+			}
+		</style>
+	</head>
+	<body>
+		<div class="contact">
+			<form action="#" method="post" name="cForm">
+				<ul id="userInput">
+					<li>
+						<label for="email">请输入邮箱地址：</label>
+						<input type="text" value="请输入邮箱地址" id="email"/>
+						<p>邮箱格式请按要求输入</p>
+					</li>
+					<li>
+						<label for="key">请输入密码：</label>
+						<input type="password" id="key" />
+						<p>密码为6-16位英文加数字</p>
+					</li>
+					<li>
+						<label for="rekey">请重复输入密码：</label>
+						<input type="password" id="rekey" />
+					</li>
+				</ul>
+
+				<ul id="choose">
+					<li>
+						<label>性别：</label>
+						<div>
+							男:<input type="radio" checked name="sex"/>
+							女：<input type="radio" name="sex"/>
+						</div>
+					</li>
+					<li>
+						<label for="city">城市：</label> 
+						<div>
+							<select id="city">
+								<option value="北京">北京</option>
+								<option value="武汉">武汉</option>
+								<option value="西安">西安</option>
+								<option value="长沙">长沙</option>
+							</select>
+						</div>
+					</li>
+					<li>
+						<label>爱好：</label>
+						<div>
+							<input type="checkbox"/>读书
+							<input type="checkbox"/>运动
+							<input type="checkbox"/>美术
+						</div>
+					</li>
+					<li>
+						<label for="describe">个人描述：</label>
+						<textarea id="describe" cols="30" rows="5">这是一个多行输入框，输入您的个人描述</textarea>
+					</li>
+					
+				</ul>
+				<div id="btn">
+						<input type="button" value="保存" name="save">
+						<input type="button" value="提交" name="submit">
+				</div>
+			</form>
+		</div>
+	</body>
+</html>
