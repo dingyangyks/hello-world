@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>三栏式布局 position定位</title>
+    <style type="text/css">
+      
+        .box{
+            width:96%;
+            height: 1000px;
+            background-color: burlywood;
+            padding: 20px;
+            position: relative;
+        }
+        #leftBox{
+            position: absolute;
+            left: 20px;
+            height: 150px;
+            width: 200px;
+            border: 1px solid black;
+            background-color: #fff;
+           
+        }
+        #rightBox{
+            position: absolute;
+            right: 20px;
+            width: 150px;
+            height: 800px;
+            border: 1px solid black;
+            background-color: #fff;
+            
+        }
+        #adaptBox{
+            position: absolute;
+            left: 240px;
+            right: 190px;
+            width: auto;
+            height:auto;
+            border: 1px solid black;
+            background-color: #fff;
+           
+        }
+        #logBox{
+            width:100px;
+            height:80px;
+            border: 1px solid black;
+            margin: 20px;
+            overflow: hidden;
+            float: left;
+        }
+        img{
+            width:200px;
+            height:160px;
+            margin: -33px -47px;/*移动图象的大小*/
+        }
+        #leftBox>p{
+            font-size:17px;
+        }
+        .smallBox{
+            width: 120px;
+            height: 70px;
+            border: 1px solid black;
+            margin: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div id="leftBox">
+            <div id="logBox">
+                <img src="https://imgsa.baidu.com/baike/crop%3D50%2C0%2C1819%2C1198%3Bc0%3Dbaike220%2C5%2C5%2C220%2C73/sign=3de6aedcf01986185508b5c477d81e5f/a71ea8d3fd1f413419f72ec32d1f95cad0c85e4e.jpg"/>
+            </div>
+            <p style="color:brown">迈<br/>阿<br/>密<br/>热<br/>火<br/>队</p>
+        </div>
+        <div id="adaptBox">
+            <p><h2>vertical-align的使用：对象内容对齐方式</h2>
+
+                值：baseline： 将支持valign特性的对象的内容与基线对齐<br/>
+                sub： 垂直对齐文本的下标<br/>
+                super： 垂直对齐文本的上标<br/>
+                top： 将支持valign特性的对象的内容与对象顶端对齐<br/>
+                text-top： 将支持valign特性的对象的文本与对象顶端对齐v
+                middle： 将支持valign特性的对象的内容与对象中部对齐<br/>
+                bottom： 将支持valign特性的对象的文本与对象底端对齐<br/>
+                text-bottom： 将支持valign特性的对象的文本与对象底端对齐 </p>
+        </div>
+        <div id="rightBox">
+            <div class="smallBox">
+              1  
+            </div>
+            <div class="smallBox">
+              2 
+            </div>
+            <div class="smallBox">
+              3 
+            </div>
+            <div class="smallBox">
+              4  
+            </div>
+        </div>
+       
+    </div>
+</body>
+</html>
