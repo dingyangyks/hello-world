@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        ul{
+            width:800px;
+            height: 150px;
+            background-color: blanchedalmond;
+            margin: 5px;
+            padding: 5px;
+        }
+        li{
+            float: left;
+            list-style: none;
+            font-size:20px;
+            text-align:center;
+            padding:5px;
+            margin:5px;
+            cursor:pointer;
+            background-color: fuchsia;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="shuru">
+    <input type="button" value="从左侧加入" id="btn1" />
+    <input type="button" value="从右侧加入" id="btn2" />
+    <input type="button" value="从左侧删除" id="btn3" />
+    <input type="button" value="从右侧删除" id="btn4" />
+    <input type="button" value="清空" id="btn5" />
+    <ul id="show"></ul><!--尽量不要留空格 以免会干扰节点的个数-->
+
+    <script type="text/javascript">
+        var oUl=document.getElementById("show");
+        var oShuRu=document.getElementById("shuru");
+        var oBtn1=document.getElementById("btn1");
+        var oBtn2=document.getElementById("btn2");
+        var oBtn3=document.getElementById("btn3");
+        var oBtn4=document.getElementById("btn4");
+        var oDele=document.getElementById("btn5");
+       
+       
+        function leftAdd(){
+            if(oShuRu.value == ""){
+                 alert("请输入字符再点击");
+            }else{
+                var oLi=document.createElement("li");
+                oLi.innerHTML=oShuRu.value;
+                oUl.insertBefore(oLi,oUl.firstChild);
+            }
+        }
+        oBtn1.addEventListener("click",leftAdd);
+     
+        function rightAdd(){
+            if(oShuRu.value == ""){
+                 alert("请输入字符再点击");
+            }else{
+                var oLi=document.createElement("li");
+                oLi.innerHTML=oShuRu.value;
+                oUl.appendChild(oLi);
+            }
+        }
+        oBtn2.addEventListener("click",rightAdd);
+
+        function leftOut(){
+            if(oUl.childNodes[0]==null){
+                alert("没有可删除的东西")
+            }else{
+                oUl.removeChild(oUl.childNodes[0]);
+            }
+        }
+        oBtn3.addEventListener("click",leftOut);
+
+        function rightOut(){
+            if(oUl.childNodes[0]==null){
+                alert("没有可删除的东西")
+            }else{
+                oUl.removeChild(oUl.lastChild);
+            }
+        }
+        oBtn4.addEventListener("click",rightOut);
+    
+        function dele(){
+            if(oUl.childNodes[0]==null){
+                alert("没有可清空的东西")
+            }else{
+                var aLi=document.getElementsByTagName("li");
+                for(var i=aLi.length-1; i>=0;i--){
+                oUl.removeChild(aLi[i]);
+                }
+            }
+        }
+        oDele.addEventListener("click",dele);
+    </script>
+    
+</body>
+</html>
