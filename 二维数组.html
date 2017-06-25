@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<h1>空气污染城市排行榜</h1>
+		<ul id="air">
+		</ul>
+		
+		<script type="text/javascript">
+			//c穿入二维数组
+		    var arr=[["西安",95],
+			         ["北京",120],
+			         ["成都",81],
+			         ["南昌",72],
+			         ["丽江",62],
+			         ["长沙",74],
+			         ["深圳",86]];
+			 
+			(function(){
+			//先排序 在筛选
+				arr.sort(function(a,b){
+		    		return b[1]-a[1];
+		    	})
+		    
+		    //去除符合要求的项
+			    var newArr=new Array();
+			    var air=document.getElementById("air");
+			    for(var i=0;i<arr.length;i++){
+			    	if(arr[i][1]>80){
+			    	   newArr.push(arr[i]);
+			           var oli=document.createElement("li");
+			           oli.innerHTML="第"+(i+1)+"名:"+newArr[i][0]+" "+newArr[i][1];
+			    	   air.appendChild(oli);
+			    	}
+			    	
+			    }
+			})()
+		</script>
+	</body>
+</html>
