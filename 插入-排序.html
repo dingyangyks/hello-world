@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        ul{
+            width:800px;
+            height: 150px;
+            background-color: blanchedalmond;
+            margin: 5px;
+            padding: 5px;
+        }
+        li{
+            float: left;
+            list-style: none;
+            padding:5px;
+            margin: 5px;
+            cursor:pointer;
+            background-color: fuchsia;
+            width: 25px;
+            font-size: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="shuru">
+    <input type="button" value="从左侧加入" id="btn1" />
+    <input type="button" value="从右侧加入" id="btn2" />
+    <input type="button" value="从左侧删除" id="btn3" />
+    <input type="button" value="从右侧删除" id="btn4" />
+    <input type="button" value="清空" id="btn5" />
+    <input type="button" value="升序" id="btn6" />
+    <input type="button" value="降序" id="btn7" />
+
+    <ul id="show"></ul><!--尽量不要留空格 以免会干扰节点的个数-->
+
+    <script type="text/javascript">
+        var oUl=document.getElementById("show");
+        var oShuRu=document.getElementById("shuru");
+        var oBtn1=document.getElementById("btn1");
+        var oBtn2=document.getElementById("btn2");
+        var oBtn3=document.getElementById("btn3");
+        var oBtn4=document.getElementById("btn4");
+        var oDele=document.getElementById("btn5");
+        var oSort1=document.getElementById("btn6");
+        var oSort2=document.getElementById("btn7");
+       
+       
+        function leftAdd(){
+            if(isNaN(oShuRu.value) || oShuRu.value > 100 || oShuRu.value<10 ){
+                 alert("请输入10-100的数字");
+            }else if(oShuRu.value <= 100 && oShuRu.value>=10){
+                var oLi=document.createElement("li");
+                var aLi=document.getElementsByTagName("li");
+                if(aLi.length>16){
+                     alert("不能插入更多了");
+                }else{
+                    oLi.innerHTML=oShuRu.value;
+                    oLi.style.height=oShuRu.value+"px";
+                    oLi.style.marginTop =(100 - oShuRu.value) + "px";
+                    oUl.insertBefore(oLi,oUl.firstChild);  
+                }
+                
+            }
+        }
+        oBtn1.addEventListener("click",leftAdd);
+     
+        function rightAdd(){
+            if(isNaN(oShuRu.value) || oShuRu.value > 100 || oShuRu.value<10 ){
+                 alert("请输入10-100的数字");
+            }else if(oShuRu.value <= 100 && oShuRu.value>=10){
+                var oLi=document.createElement("li");
+                var aLi=document.getElementsByTagName("li");
+                if(aLi.length>16){
+                     alert("不能插入更多了");
+                }else{
+                    oLi.innerHTML=oShuRu.value;
+                    oLi.style.height=oShuRu.value+"px";
+                    oLi.style.marginTop =(100 - oShuRu.value) + "px";//小技巧
+                    oUl.appendChild(oLi);
+                }
+            }
+        }
+        oBtn2.addEventListener("click",rightAdd);
+
+        function leftOut(){
+            if(oUl.childNodes[0]==null){
+                alert("没有可删除的东西")
+            }else{
+                oUl.removeChild(oUl.childNodes[0]);
+            }
+        }
+        oBtn3.addEventListener("click",leftOut);
+
+        function rightOut(){
+            if(oUl.childNodes[0]==null){
+                alert("没有可删除的东西")
+            }else{
+                oUl.removeChild(oUl.lastChild);
+            }
+        }
+        oBtn4.addEventListener("click",rightOut);
+        
+        //清空所有子节点 倒序删除
+        function dele(){
+            if(oUl.childNodes[0]==null){
+                alert("没有可清空的东西")
+            }else{
+                var aLi=document.getElementsByTagName("li");
+                for(var i=aLi.length-1; i>=0;i--){
+                oUl.removeChild(aLi[i]);
+                }
+            }
+        }
+        oDele.addEventListener("click",dele);
+
+        //排序 升序 冒泡排序
+        function order1(e){
+            e.preventDefault();
+            var aLi=document.getElementsByTagName("li");
+            var i=aLi.length,j;
+            alert(i);
+            var h,m,t;
+            while (i > 0) {
+                for (j = 0; j < i-1 ; j++) {
+                    if (parseInt(aLi[j].style.height,10) > parseInt(aLi[j + 1].style.height,10)){
+                        //aLi[j].style.height是带有px单位的，切记不能比较带单位的 会产生错误，需要转化成字符串在比较
+                        h = aLi[j].style.height;
+                        m = aLi[j].style.marginTop;
+                        t = aLi[j].innerHTML;
+
+                        aLi[j].style.height = aLi[j + 1].style.height;
+                        aLi[j].style.marginTop = aLi[j + 1].style.marginTop;
+                        aLi[j].innerHTML = aLi[j + 1].innerHTML;
+
+                        aLi[j + 1].style.height = h;
+                        aLi[j + 1].style.marginTop = m;
+                        aLi[j + 1].innerHTML = t;
+                    } 
+                }
+                i--;
+            }
+            return aLi;
+        }
+        oSort1.addEventListener("click",order1);
+
+         //排序 降序
+        function order2(e){
+            e.preventDefault();
+            var aLi=document.getElementsByTagName("li");
+            var i=aLi.length,j;
+            alert(i);
+            var h,m,t;
+            while (i > 0) {
+                for (j = 0; j < i-1 ; j++) {
+                    if (parseInt(aLi[j].style.height,10) < parseInt(aLi[j + 1].style.height,10)){
+
+                        h = aLi[j].style.height;
+                        m = aLi[j].style.marginTop;
+                        t = aLi[j].innerHTML;
+
+                        aLi[j].style.height = aLi[j + 1].style.height;
+                        aLi[j].style.marginTop = aLi[j + 1].style.marginTop;
+                        aLi[j].innerHTML = aLi[j + 1].innerHTML;
+
+                        aLi[j + 1].style.height = h;
+                        aLi[j + 1].style.marginTop = m;
+                        aLi[j + 1].innerHTML = t;
+
+                    }
+                }
+                i--;
+            }
+            return aLi;
+        }
+        oSort2.addEventListener("click",order2);
+    </script>
+    
+</body>
+</html>
