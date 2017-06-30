@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>时钟</title>
+		<style type="text/css">
+			body{font-size: 40px;color: black;
+			    background:burlywood;}
+			div{text-align: center;}
+		</style>
+		<script type="text/javascript">
+			window.addEventListener("load",function(){
+				var xingqi=["img/seven.png",
+				            "img/one.png",
+				            "img/two.png",
+				            "img/three.png",
+				            "img/four.png",
+				            "img/five.png",
+				            "img/six.png"
+				            ];/*创建一个数组 存储汉字的星期*/
+				           
+				var addZero=function(num){
+					if(num>=10){
+						return num;
+					}else{
+						return "0"+num;
+					}
+				}/*给个位数前面补上0*/
+				
+				var jishi=function(){
+					odate=new Date();
+					var str=addZero(odate.getHours())+""+addZero(odate.getMinutes())+addZero(odate.getSeconds());/*把获取的时间补零转化成字符串*/
+					var a=[];
+					var aimg=document.getElementsByTagName("img");			
+					for(var i=0;i<6;i++){
+						a[i]=str.charAt(i);
+						aimg[i].src="img/"+a[i]+".png";/*记住如何加引号的表达方法*/
+					}
+				};
+				setInterval(jishi,1000);
+				jishi();/*需要自动执行一次 不然在刚载入页面时会出现000000的现象*/
+				
+				var Nian=function(){
+					var str1=odate.getYear()+1900+addZero(odate.getMonth()+1)+addZero(odate.getDate());
+					//console.log(str1);
+					var Odiv=document.getElementById("riqi");
+					var aimg1=Odiv.getElementsByTagName("img");
+					var b=[];
+					for(var j=0;j<8;j++){
+						b[j]=str1.charAt(j);
+						aimg1[j].src="img/"+b[j]+".png";
+					}
+				};
+				setInterval(Nian,86400000);
+				Nian();
+				
+				var XingQi=function(){
+					var aXingQi=odate.getDay();
+					var axingqiji=document.getElementById("xingqiji");
+					axingqiji.src=xingqi[aXingQi];
+				};
+				setInterval(XingQi,86400000);
+				XingQi();
+
+		},false)
+		</script>
+	</head>
+	<body>
+		<div>
+			<img src="img/0.png"/>
+			<img src="img/0.png"/>
+			时
+			<img src="img/0.png"/>
+			<img src="img/0.png"/>
+			分
+			<img src="img/0.png"/>
+			<img src="img/0.png"/>
+			秒
+		</div>
+		<div id="riqi">
+			<img src="img/0.png"/>
+			<img src="img/0.png"/>
+			<img src="img/0.png"/>
+			<img src="img/0.png"/>
+			年
+			<img src="img/0.png"/>
+			<img src="img/0.png"/>
+			月
+			<img src="img/0.png"/>
+			<img src="img/0.png"/>
+			日
+			星期
+			<img src="img/two.png" id="xingqiji"/>
+			
+		</div>
+	</body>
+</html>
