@@ -47,7 +47,7 @@
             padding: 0;
             margin: 0;
             font-size: 0;/*li 换行是会自动补上一个空格 所以会有间隙，放在一排即可消除或者在ul里放上font-size:0；也可消除间隙*/
-            position: 1absolute;
+            position: absolute;
             left: 0;
         }
         li{ 
@@ -111,10 +111,10 @@
         var isspeed=2;
         
         setInterval(function(){
-        oul.style.left=oul.offsetLeft-isspeed+"px";/*控制每次移动的距离*/
-            if(oul.offsetLeft < -oul.offsetWidth/2){
+        oul.style.left=oul.offsetLeft-isspeed+"px";/*控制移动的距离*/
+            if(oul.offsetLeft < -oul.offsetWidth/2){/*向左移动 oul的实际宽度的一半即为第一套走完时的left，当offsetleft小于总宽度的一半时则拉回起始位置*/
                 oul.style.left=0+"px";
-            }else if(oul.offsetLeft > 0){
+            }else if(oul.offsetLeft > 0){/*向右移动 oul的left只要一大于0 就向左移动总宽度的一半，即为oul.offsetWidth/2，向左为负号，不要忘记px*/
                 oul.style.left=-oul.offsetWidth/2+"px";
             }
         },30);/*会自动执行*/
@@ -129,10 +129,10 @@
         };
         oul.onmouseover=function(){
             isspeed=0;
-        }
+        };
         oul.onmouseleave=function(){
             isspeed=2;
-        }      
+        };
     })
         
     </script>
