@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+    div{
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        background-color: red;
+        left: 0;
+        top: 50px;
+    }
+    </style>
+</head>
+<body>
+    <button onclick="startmove()">开始</button>
+    <div id="div1"></div>
+    <script type="text/javascript">
+        var timer=null;/*先把定时器存为null，方便以后关掉*/
+        function startmove(){
+           var odiv=document.getElementById("div1");
+           clearInterval(timer);/*在执行运动前关掉定时器就不会导致多次点击速度越来越快*/
+           /*把计时器记录下来*/
+           timer = setInterval(function(){
+                if(parseInt(odiv.style.left)>=300){/*注意odiv.style.left是带px单位的*/
+                    clearInterval(timer);/*关闭计时器即可停止 clearInterval是关掉下一次计时，所有再次点击还会运动一次*/
+                }else{/*把运动条件放在else里面即可解决停止后再点击会继续运动的问题 这样就会使停止和运动对立起来*/
+                    odiv.style.left=odiv.offsetLeft+1+"px";
+                }
+            },30) 
+        }
+    </script>
+</body>
+</html>
