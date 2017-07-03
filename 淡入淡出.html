@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        img{
+            opacity:0.3;/*透明度*/
+        }
+    </style>
+    <script type="text/javascript">
+        window.addEventListener("load",function(){
+
+            var oimg=document.getElementsByTagName("img")[0];
+            var timer=null;
+            var alpha=0.3;
+            // alert(typeof oimg.style.opacity);字符串
+            
+            function move(){
+                var isspeed=0.5;
+                clearInterval(timer);
+                timer=setInterval(function(){
+                    if(alpha >= 1){//注意 写等号超过1不会停止
+                        clearInterval(timer);
+                    }else{
+                    alpha = alpha + 0.01;
+                    oimg.style.opacity=alpha;
+                    document.title=alpha;
+                    }
+                },30);
+            }
+            function moveout(){
+                var isspeed=0.5;
+                clearInterval(timer);
+                timer=setInterval(function(){
+                    if(alpha <= 0.3){//注意 写等号超过1不会停止
+                        clearInterval(timer);
+                    }else{
+                    alpha = alpha - 0.01;
+                    oimg.style.opacity=alpha;
+                    document.title=alpha;
+                    }
+                },30);
+            }
+            oimg.addEventListener("mouseover",move);
+            oimg.addEventListener("mouseout",moveout);
+        })  
+    </script>
+</head>
+<body>
+    <img src="无缝滚动图片/29b58PICXN2_1024.jpg"/>
+    
+</body>
+</html>
