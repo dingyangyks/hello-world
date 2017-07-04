@@ -8,6 +8,7 @@
     <style type="text/css">
         img{
             opacity:0.3;/*透明度*/
+           width: 800px;
         }
     </style>
     <script type="text/javascript">
@@ -15,31 +16,32 @@
 
             var oimg=document.getElementsByTagName("img")[0];
             var timer=null;
-            var alpha=0.3;
+            var alpha = 0.3;
             // alert(typeof oimg.style.opacity);字符串
-            
+            // alert(oimg.style.width===800+"px")  oimg.style.width不和对应到值相等
+            // alert(oimg.style.opacity===0.3) false
             function move(){
-                var isspeed=0.5;
+                var isspeed=0.01;
                 clearInterval(timer);
                 timer=setInterval(function(){
                     if(alpha >= 1){//注意 写等号超过1不会停止
                         clearInterval(timer);
                     }else{
-                    alpha = alpha + 0.01;
+                    alpha = alpha + isspeed;
                     oimg.style.opacity=alpha;
                     document.title=alpha;
                     }
                 },30);
             }
             function moveout(){
-                var isspeed=0.5;
+                var isspeed=0.01;
                 clearInterval(timer);
                 timer=setInterval(function(){
                     if(alpha <= 0.3){//注意 写等号超过1不会停止
                         clearInterval(timer);
                     }else{
-                    alpha = alpha - 0.01;
-                    oimg.style.opacity=alpha;
+                    alpha = alpha - isspeed;
+                    oimg.style.opacity=alpha;/*把alpha赋值给样式*/
                     document.title=alpha;
                     }
                 },30);
