@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        #root{
+            width:1100px;
+            height: 600px;
+            margin: 10px auto;
+            border: 1px solid red;
+        }
+        .box1{
+            width: 530px;
+            height:560px;
+            border: 1px solid blue;
+            float: left;
+            margin: 9px;
+        }
+        .box2{
+            width:200px;
+            height: 500px;
+            border: 1px solid green;
+            float: left;
+            margin: 30px;
+        }
+        .box3{
+            width:80px;
+            height: 100px;
+            border: 1px solid black;
+            float: left;
+            margin:200px 9px;
+        }
+        #btn{
+            text-align: center;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <div class="box1">
+            <div class="box2">
+                 <div class="box3"></div>
+                 <div class="box3"></div>
+            </div>
+            <div class="box2">
+                 <div class="box3"></div>
+                 <div class="box3"></div>
+            </div>
+        </div>
+        <div class="box1">
+            <div class="box2">
+                 <div class="box3"></div>
+                 <div class="box3"></div>
+            </div>
+            <div class="box2">
+                 <div class="box3"></div>
+                 <div class="box3"></div>
+            </div>
+        </div>
+    </div>
+    <ul id="btn">
+        <input type="button" value="先序遍历" id="btn1">
+        <input type="button" value="中序遍历" id="btn2">
+        <input type="button" value="后序遍历" id="btn3">
+    </ul>
+    <script type="text/javascript">
+    window.addEventListener("load",function(){
+    	
+    	var timer=null;
+    	
+        //先序遍历
+        function front(node,arr){
+            if(node!==null){
+                arr.push(node);
+                front(node.firstElementChild,arr);
+                front(node.lastElementChild,arr);
+            }
+        }
+        //中序遍历
+        function middle(node,arr){
+            if(node!==null){
+                front(node.firstElementChild,arr);
+                arr.push(node);
+                front(node.lastElementChild,arr);
+            }
+        }
+        //后序遍历
+        function back(node,arr){
+            if(node!==null){
+                front(node.firstElementChild,arr);
+                front(node.lastElementChild,arr);
+                arr.push(node);
+            }
+        }
+
+         //遍历style改变
+        // function changeStyle(el) {
+        //     var nodeArr = document.getElementsByTagName("div");
+        //     for(var i = 0;i < nodeArr.length; i++){
+        //         // nodeArr[i].style.backgroundColor = 'red';
+        //          el.style.backgroundColor = '#337ab7';
+        //     }
+        // }
+
+        //动画事件
+        function setAction(arr) {
+            var i = 0;
+            timer = setInterval(function () {
+                if(i > arr.length -1){
+                    arr[arr.length -1].style.backgroundColor = "#fff";//数组的最后一个
+                    // arr[arr.length -1].style.transform = "scale(1)";
+                    clearInterval(timer);
+                }else {
+                    if(i > 0){
+                        arr[i-1].style.backgroundColor = '#fff';
+                        // arr[i-1].style.transform = "scale(1)";
+                    }
+                    arr[i].style.backgroundColor = '#337ab7';
+                    // arr[i].style.transform = "scale(1.1)";
+                }
+                i++;
+                if(i>=16){//防止无限进行下去
+                    clearInterval(timer);
+                    // alert(i);
+                }
+            },500);
+        }
+
+        //按钮事件
+        function btnOK(root,fn) {
+            var arr = [];
+            clearInterval(timer);
+            fn(root,arr);
+            setAction(arr);
+        }
+
+        function init() {
+            var root = document.getElementById("root")
+                preOrderBtn = document.getElementById("btn1");
+                inOrderBtn = document.getElementById("btn2");
+                postOrderBtn = document.getElementById("btn3");
+
+
+            preOrderBtn.onclick = function () {
+                btnOK(root,front);
+            };
+
+            inOrderBtn.onclick = function () {
+                btnOK(root,middle);
+            };
+            
+            postOrderBtn.onclick = function () {
+                btnOK(root,back);
+            };
+        }
+
+        init();
+
+
+    })
+    </script>
+</body>
+</html>
