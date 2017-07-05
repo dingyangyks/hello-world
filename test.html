@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        #root{
+            width:1100px;
+            height: 600px;
+            margin: 10px auto;
+            border: 1px solid red;
+        }
+        .box1{
+            width: 530px;
+            height:560px;
+            border: 1px solid blue;
+            float: left;
+            margin: 9px;
+        }
+        .box2{
+            width:200px;
+            height: 500px;
+            border: 1px solid green;
+            float: left;
+            margin: 30px;
+        }
+        .box3{
+            width:80px;
+            height: 100px;
+            border: 1px solid black;
+            float: left;
+            margin:200px 9px;
+        }
+        #btn{
+            text-align: center;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <div class="box1">
+            <div class="box2">
+                 <div class="box3"></div>
+                 <div class="box3"></div>
+            </div>
+            <div class="box2">
+                 <div class="box3"></div>
+                 <div class="box3"></div>
+            </div>
+        </div>
+        <div class="box1">
+            <div class="box2">
+                 <div class="box3"></div>
+                 <div class="box3"></div>
+            </div>
+            <div class="box2">
+                 <div class="box3"></div>
+                 <div class="box3"></div>
+            </div>
+        </div>
+    </div>
+    <ul id="btn">
+        <input type="button" value="先序遍历" id="btn1">
+        <input type="button" value="中序遍历" id="btn2">
+        <input type="button" value="后序遍历" id="btn3">
+    </ul>
+    <script type="text/javascript">
+    window.addEventListener("load",function(){
+    	var timer=null;
+		var root=document.getElementById("root");
+		
+
+		//先序遍历
+		function front(node,arr){
+			if(node!==null){//空的就没法遍历
+				arr.push(node);
+				front(node.firstElementChild,arr);
+				front(node.lastElementChild,arr);
+			}
+		}
+		//中序遍历
+		function middle(node,arr){
+			if(node!==null){//空的就没法遍历
+				middle(node.firstElementChild,arr);
+				arr.push(node);
+				middle(node.lastElementChild,arr);
+			}
+		}
+		//后序遍历
+		function back(node,arr){
+			if(node!==null){//空的就没法遍历
+			    back(node.firstElementChild,arr);
+				back(node.lastElementChild,arr);
+				arr.push(node);
+			}
+		}
+        
+		//改变其样式
+		function setAction(arr){
+			for(var i=0;i<=arr.length;i++){
+				(function(n){
+					setTimeout(function(){
+						if(n>0){
+							arr[n-1].style.backgroundColor = '#fff';
+						}
+						if(n<arr.length){
+							arr[n].style.backgroundColor = '#337ab7';
+						}	
+					}, n * 500)
+				})(i);
+			}
+
+			setInterval(function(){
+				i++;
+				if(i>0)
+			},500)
+		}
+
+	
+		
+		//点击事件
+		function btn(arr,fn){//传入两参数
+			arr=[];//设置形参为数组
+			clearInterval(timer);//点击另一个时关闭其他按钮的点击事件  但是不会让已改变的颜色恢复
+			fn(root,arr);//设置fn形参 
+			setAction(arr);
+		}
+ 
+		var preOrderBtn = document.getElementById("btn1");
+		var inOrderBtn = document.getElementById("btn2");
+		var postOrderBtn = document.getElementById("btn3");
+
+		preOrderBtn.addEventListener("click",function(){
+			btn(root,front);
+		})
+		inOrderBtn.addEventListener("click",function(){
+			btn(middle,middle);
+		})
+		postOrderBtn.addEventListener("click",function(){
+			btn(back,back);
+		})
+		
+	})	
+    </script>
+</body>
+</html>

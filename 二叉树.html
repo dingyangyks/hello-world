@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>二叉树</title>
     <style type="text/css">
+        div{
+            background-color: #fff;/*加上白色背景以免在第一次点击时覆盖全部*/
+        }
         #root{
             width:1100px;
             height: 600px;
@@ -73,7 +76,7 @@
     	var timer=null;
     	
         //先序遍历
-        function front(node,arr){
+         function front(node,arr){
             if(node!==null){
                 arr.push(node);
                 front(node.firstElementChild,arr);
@@ -81,7 +84,7 @@
             }
         }
         //中序遍历
-        function middle(node,arr){
+         function middle(node,arr){
             if(node!==null){
                 front(node.firstElementChild,arr);
                 arr.push(node);
@@ -97,13 +100,14 @@
             }
         }
 
-         //遍历style改变
+        // //  遍历style改变
         // function changeStyle(el) {
         //     var nodeArr = document.getElementsByTagName("div");
         //     for(var i = 0;i < nodeArr.length; i++){
-        //         // nodeArr[i].style.backgroundColor = 'red';
-        //          el.style.backgroundColor = '#337ab7';
+        //         nodeArr[i].style.backgroundColor = '#fff';
         //     }
+        //     el.style.backgroundColor = 'red';
+
         // }
 
         //动画事件
@@ -123,9 +127,8 @@
                     // arr[i].style.transform = "scale(1.1)";
                 }
                 i++;
-                if(i>=16){//防止无限进行下去
+                if(i>=16){
                     clearInterval(timer);
-                    // alert(i);
                 }
             },500);
         }
