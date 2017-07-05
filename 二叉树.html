@@ -111,26 +111,41 @@
         // }
 
         //动画事件
-        function setAction(arr) {
-            var i = 0;
-            timer = setInterval(function () {
-                if(i > arr.length -1){
-                    arr[arr.length -1].style.backgroundColor = "#fff";//数组的最后一个
-                    // arr[arr.length -1].style.transform = "scale(1)";
-                    clearInterval(timer);
-                }else {
-                    if(i > 0){
-                        arr[i-1].style.backgroundColor = '#fff';
-                        // arr[i-1].style.transform = "scale(1)";
-                    }
-                    arr[i].style.backgroundColor = '#337ab7';
-                    // arr[i].style.transform = "scale(1.1)";
-                }
-                i++;
-                if(i>=16){
-                    clearInterval(timer);
-                }
-            },500);
+        // function setAction(arr) {
+        //     var i = 0;
+        //     timer = setInterval(function () {
+        //         if(i > arr.length -1){
+        //             arr[arr.length -1].style.backgroundColor = "#fff";//数组的最后一个
+        //             // arr[arr.length -1].style.transform = "scale(1)";
+        //             clearInterval(timer);
+        //         }else {
+        //             if(i > 0){
+        //                 arr[i-1].style.backgroundColor = '#fff';
+        //                 // arr[i-1].style.transform = "scale(1)";
+        //             }
+        //             arr[i].style.backgroundColor = '#337ab7';
+        //             // arr[i].style.transform = "scale(1.1)";
+        //         }
+        //         i++;
+        //         if(i>=16){//放置超过数组长度还继续执行函数
+        //             clearInterval(timer);
+        //         }
+        //     },500);
+        // }
+
+        function setAction(arr){
+            for(var i=0;i<=arr.length;i++){
+                !function(n){
+                    setTimeout(function() {
+                         if(n>0){
+                            arr[n-1].style.backgroundColor="#fff";
+                         }
+                         if(n<arr.length){
+                             arr[n].style.backgroundColor="#337ab7";
+                         }
+                    }, n*500);
+                }(i);
+            }
         }
 
         //按钮事件
