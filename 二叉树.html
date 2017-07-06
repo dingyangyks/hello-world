@@ -86,16 +86,16 @@
         //中序遍历
          function middle(node,arr){
             if(node!==null){
-                front(node.firstElementChild,arr);
+                middle(node.firstElementChild,arr);
                 arr.push(node);
-                front(node.lastElementChild,arr);
+                middle(node.lastElementChild,arr);
             }
         }
         //后序遍历
         function back(node,arr){
             if(node!==null){
-                front(node.firstElementChild,arr);
-                front(node.lastElementChild,arr);
+                back(node.firstElementChild,arr);
+                back(node.lastElementChild,arr);
                 arr.push(node);
             }
         }
@@ -134,17 +134,17 @@
         // }
 
         function setAction(arr){
-            for(var i=0;i<=arr.length;i++){
-                !function(n){
+            for(var i=0;i<=arr.length;i++){//没有等号的话不会使最后一个遍历是恢复白色
+                !function(n){//n要在自动执行时就调用
                     setTimeout(function() {
-                         if(n>0){
+                         if(n>0){//注意保持单数一致
                             arr[n-1].style.backgroundColor="#fff";
                          }
                          if(n<arr.length){
                              arr[n].style.backgroundColor="#337ab7";
                          }
                     }, n*500);
-                }(i);
+                }(i);//要利用闭包
             }
         }
 
@@ -154,13 +154,14 @@
             clearInterval(timer);
             fn(root,arr);
             setAction(arr);
+            
         }
 
-        function init() {
             var root = document.getElementById("root")
-                preOrderBtn = document.getElementById("btn1");
-                inOrderBtn = document.getElementById("btn2");
-                postOrderBtn = document.getElementById("btn3");
+            var preOrderBtn = document.getElementById("btn1");
+            var inOrderBtn = document.getElementById("btn2");
+            var postOrderBtn = document.getElementById("btn3");
+            var adiv=document.getElementsByTagName("div")[0];
 
 
             preOrderBtn.onclick = function () {
@@ -174,11 +175,7 @@
             postOrderBtn.onclick = function () {
                 btnOK(root,back);
             };
-        }
-
-        init();
-
-
+        
     })
     </script>
 </body>
