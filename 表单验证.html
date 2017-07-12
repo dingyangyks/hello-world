@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        form {
+            width: 300px;
+            height: 200px;
+            margin: 0 auto;
+            background-color: sandybrown;
+            text-align: center;
+        }
+
+        input {
+            margin: 5px;
+        }
+
+        p {
+            margin: 0;
+            padding: 0;
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <form>
+        <input type="text" placeholder="长度为4~16个字符" id="txt1">
+        <input type="button" value="验证" id="btn1">
+        <p id="p1">jhiuh</p>
+        <input type="text">
+        <input type="button" value="验证">
+        <input type="text">
+        <input type="button" value="验证">
+    </form>
+    <script type="text/javascript">
+        var txt1 = document.getElementById("txt1");
+        var btn1 = document.getElementById("btn1");
+        var p1 = document.getElementById("p1");
+        function hint() {
+            var txttxt = txt1.value;
+            txttxt = txttxt.replace(/^\s+|\s$/g, "").replace(/[\u0391-\uFFE5]/g, "*");
+            if (txttxt < 16 || txttxt > 4) {
+               prompt(pTxt,2);
+            }
+            alert(txttxt);
+        }
+        btn1.onclick = hint;
+    </script>
+</body>
+
+</html>

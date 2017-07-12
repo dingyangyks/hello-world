@@ -1,0 +1,62 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <style type="text/css">
+           
+            div{
+                width: 100px;
+                height: 100px;
+                background-color: red;
+                position: absolute;
+                left: 8000px;
+            }
+            span{
+                width: 0px;
+                height: 500px;
+                border: 1px solid black;
+                position: absolute;
+                left: 500px;
+                top: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <button id="btn">开始运动</button>
+        <div id="div1"></div>
+        <span></span> 
+        <input type="text" id="iput">
+        <script type="text/javascript">
+            window.addEventListener("load",function(){
+                var btn=document.getElementById("btn");
+                var oDiv=document.getElementById("div1");
+                var timer=null;
+                var aput=document.getElementById("iput");
+                
+                function StartMove(){
+                    clearInterval(timer);
+                    timer=setInterval(function(){
+                        var ispeed=(500-oDiv.offsetLeft)/8;//小数，left只读整数位，会省略小数
+                        if(parseInt(oDiv.style.left)==500){
+                            clearInterval(timer);
+                        }else{
+                            if(parseInt(oDiv.style.left)<=500){
+                                ispeed=Math.ceil(ispeed);//向上取整  解决停止后不能到达准确位置
+                                oDiv.style.left=oDiv.offsetLeft+ispeed+"px";
+                            }else{
+                                ispeed=Math.floor(ispeed);//向下取整  解决停止后不能到达准确位置
+                                oDiv.style.left=oDiv.offsetLeft+ispeed+"px";
+                            }
+                        }
+                        aput.value=oDiv.offsetLeft+"速度："+ispeed;    
+                    },30);
+                               
+                }
+                btn.addEventListener("click",StartMove);
+            })
+        </script>
+    </body>
+    </html>
