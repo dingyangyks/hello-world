@@ -39,7 +39,7 @@
 
 
             function StarMove(obj,iTarget){
-                var ispeed=(iTarget-obj.alpha)/8;
+                var ispeed=(iTarget-obj.alpha)/30;
                 // ispeed=ispeed>0?Math.ceil(ispeed):Math.floor(ispeed);
                 clearInterval(obj.timer)
                 obj.timer=setInterval(function(){

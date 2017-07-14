@@ -38,7 +38,7 @@
            var i=0;
 
            for(i=0;i<=aDiv.length;i++){
-               aDiv[i].timer=null;//给每一个div加上timer 就可以解决移动过快导致运动突然停止的情况
+            // aDiv[i].timer=null;//给每一个div加上timer 就可以解决移动过快导致运动突然停止的情况
                aDiv[i].onmouseover=function(){
                    StarMove(this,500);//理解this
                }
@@ -51,16 +51,17 @@
                 clearInterval(obj.timer);
                 obj.timer=setInterval(function(){
                     var ispeed=(iTarget - obj.offsetWidth)/8;
+                    ispeed=ispeed>0?Math.ceil(ispeed):Math.floor(ispeed);
                     if(obj.offsetWidth==iTarget){
                         clearInterval(obj.timer);
                     }else{
-                        if(obj.offsetWidth<=iTarget){
-                            ispeed=Math.ceil(ispeed);
+                        // if(obj.offsetWidth<=iTarget){
+                        //     ispeed=Math.ceil(ispeed);
+                        //     obj.style.width = obj.offsetWidth+ispeed+"px";
+                        // }else{
+                            // ispeed=Math.floor(ispeed);
                             obj.style.width = obj.offsetWidth+ispeed+"px";
-                        }else{
-                            ispeed=Math.floor(ispeed);
-                            obj.style.width = obj.offsetWidth+ispeed+"px";
-                        }
+                        // }
                     }
                     
                 },30)
