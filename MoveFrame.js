@@ -50,6 +50,6 @@ function MoveFrame(obj, json, speed, times, fn) {
 //1.匀速运动，只要将speed设置为1即为匀速运动，
 //2.缓冲运动，降speed设置为不是1的数
 //3.可进行链式运动，传入fn即可
-//4.可同时进行多个运动，在json中传入，例如{width：'300'}，注意传入像素时不要加px
+//4.可同时进行多个运动，在json中传入，例如{width：'300'} {width：300}，注意传入像素时不要加px
 //5.可以进行淡入淡出运动，注意opacity是小数，但是在这里传入时需要乘以100，例如想要opacity变化到0.3，需要在json中传入{opacity：'30'}
 

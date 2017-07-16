@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>布局转换</title>
+    <style type="text/css">
+        #dad {
+            background-color: rgb(247, 120, 156);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            margin-left: -100px;
+            margin-top: -100px;
+        }
+
+        #son {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            background-color: rgb(71, 82, 93);
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="dad">
+        <div id="son"></div>
+    </div>
+    <script src="MoveFrame.js"></script>
+    <script type="text/javascript">
+        window.addEventListener('load', function () {
+            var oDiv = document.getElementById('son');
+            oDiv.addEventListener('click', function () {
+                MoveFrame(this, { width: 200, height: 200 }, 10, 100);
+            })
+        })
+    </script>
+</body>
+</html>
