@@ -4,7 +4,7 @@ function getStyle(obj, attr) {//形参中字符串不能写冒号
 }
 
 //运动框架
-function MoveFrame(obj, attr, iTarget, speed, times) {
+function MoveFrame(obj, attr, iTarget, speed, times,fn) {
     clearInterval(obj.timer)
     //添加自定义属性timer不需要声明
     obj.timer = setInterval(function () {
@@ -22,6 +22,10 @@ function MoveFrame(obj, attr, iTarget, speed, times) {
 
         if (iStyle == iTarget) {
             clearInterval(obj.timer);
+            if(fn){//链式运动 
+                fn();
+            }
+            
         } else {
             //因为透明度没有px单位所以在计算后也要进行一次判断
             if (attr == "opacity") {
