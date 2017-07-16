@@ -74,7 +74,7 @@
         
         var odiv=document.getElementsByTagName("div")[0];
         odiv.onclick=function(){
-            MoveFrame(this,"opacity",30,10,30);
+            MoveFrame(this,{opacity:'30'},10,30);
         }
         var odiv=document.getElementsByTagName("div")[1];
         odiv.onclick=function(){
@@ -87,7 +87,7 @@
         }
         var odiv=document.getElementsByTagName("div")[3];
         odiv.onclick=function(){
-            MoveFrame(this,"height",10,10,30);
+            MoveFrame(this,{height:'10',width:'502'},10,30);
         }
         
     </script>
