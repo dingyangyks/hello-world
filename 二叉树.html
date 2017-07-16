@@ -111,42 +111,42 @@
         // }
 
         //动画事件
-        // function setAction(arr) {
-        //     var i = 0;
-        //     timer = setInterval(function () {
-        //         if(i > arr.length -1){
-        //             arr[arr.length -1].style.backgroundColor = "#fff";//数组的最后一个
-        //             // arr[arr.length -1].style.transform = "scale(1)";
-        //             clearInterval(timer);
-        //         }else {
-        //             if(i > 0){
-        //                 arr[i-1].style.backgroundColor = '#fff';
-        //                 // arr[i-1].style.transform = "scale(1)";
-        //             }
-        //             arr[i].style.backgroundColor = '#337ab7';
-        //             // arr[i].style.transform = "scale(1.1)";
-        //         }
-        //         i++;
-        //         if(i>=16){//放置超过数组长度还继续执行函数
-        //             clearInterval(timer);
-        //         }
-        //     },500);
-        // }
-
-        function setAction(arr){
-            for(var i=0;i<=arr.length;i++){//没有等号的话不会使最后一个遍历是恢复白色
-                !function(n){//n要在自动执行时就调用
-                    setTimeout(function() {
-                         if(n>0){//注意保持单数一致
-                            arr[n-1].style.backgroundColor="#fff";
-                         }
-                         if(n<arr.length){
-                             arr[n].style.backgroundColor="#337ab7";
-                         }
-                    }, n*500);
-                }(i);//要利用闭包
-            }
+        function setAction(arr) {
+            var i = 0;
+            timer = setInterval(function () {
+                if(i > arr.length -1){
+                    arr[arr.length -1].style.backgroundColor = "#fff";//数组的最后一个
+                    // arr[arr.length -1].style.transform = "scale(1)";
+                    clearInterval(timer);
+                }else {
+                    if(i > 0){
+                        arr[i-1].style.backgroundColor = '#fff';
+                        // arr[i-1].style.transform = "scale(1)";
+                    }
+                    arr[i].style.backgroundColor = '#337ab7';
+                    // arr[i].style.transform = "scale(1.1)";
+                }
+                i++;
+                if(i>=16){//放置超过数组长度还继续执行函数
+                    clearInterval(timer);
+                }
+            },500);
         }
+
+        // function setAction(arr){
+        //     for(var i=0;i<=arr.length;i++){//没有等号的话不会使最后一个遍历是恢复白色
+        //         !function(n){//n要在自动执行时就调用
+        //             setTimeout(function() {
+        //                  if(n>0){//注意保持单数一致
+        //                     arr[n-1].style.backgroundColor="#fff";
+        //                  }
+        //                  if(n<arr.length){
+        //                      arr[n].style.backgroundColor="#337ab7";
+        //                  }
+        //             }, n*500);
+        //         }(i);//要利用闭包
+        //     }
+        // }
 
         //按钮事件
         function btnOK(root,fn) {

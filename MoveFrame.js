@@ -9,10 +9,11 @@ function MoveFrame(obj, attr, iTarget, speed, times) {
     //添加自定义属性timer不需要声明
     obj.timer = setInterval(function () {
         //改变透明度时  在获取是需要判断
+        var iStyle;
         if (attr == "opacity") {
-            var iStyle = parseFloat(getStyle(obj, attr)) * 100;//透明度为小数，所有用parseFloat，转化为三位数以便计算
+            iStyle = parseFloat(getStyle(obj, attr)) * 100;//透明度为小数，所有用parseFloat，转化为三位数以便计算
         } else {
-            var iStyle = parseInt(getStyle(obj, attr))//把获取的属性存储在参数中
+            iStyle = parseInt(getStyle(obj, attr))//把获取的属性存储在参数中
         }
 
         var ispeed = (iTarget - iStyle) / speed;//速度定义一定要在定时器里，因为速度是根据变化的属性确定的
