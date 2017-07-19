@@ -5,39 +5,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>自由落体运动</title>
     <style type="text/css">
-        .father {
-            position: fixed;
-            width: 200px;
-            height: 200px;
-            margin-left: -100px;
-            /* width的一半的相反数 */
-            margin-top: -100px;
-            /* height的一半的相反数 */
-            top: 50%;
-            left: 50%;
-            background-color: rgba(0, 0, 0, .7);
+        body{
+            margin: 0;
         }
-
-        .son {
+        #ball{
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
             position: absolute;
+            overflow: hidden;
             top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            width: 50%;
-            height: 50%;
-            margin: auto;
-            background-color: red;
+            cursor: pointer;
+            background-color: black;
+        }
+        img{
+            width:169px;
+            height: 165px;
+            position: absolute;
+            left: -66px;
+            top: -23px; 
+        }
+        span{
+            width: 100%;
+            height: 1px;
+            border: 1px solid black;
+            background-color: black;
+            position: fixed;
+            top: 600px;
+            
         }
     </style>
 </head>
 
 <body>
-    <div class="father">
-        <div class="son"></div>
+    <div id="ball">
+        <img src="img/kwtpse1a.bmp">
     </div>
+    <span></span>
 </body>
+ <script src="MoveFrame.js"></script>
+ <script type="text/javascript">
+ window.addEventListener('load',function(){
+   
+    var ball=document.getElementById('ball');
+    ball.addEventListener('mousedown',function(event){
+        var target=event.target;
+        follow(this);
+        
+        console.log(this.style.left+','+ this.style.top);
+    })
+ })
+function follow(obj){
+    var X=event.clientX;
+    var Y=event.clientY;
+    obj.style.left = X-obj.offsetLeft+'px';
+    obj.style.top = Y-obj.offsetTop+'px';
+    
+    console.log(obj.offsetLeft+','+ obj.offsetTop);
+    console.log(obj.style.left+','+ obj.style.top);
+}
+    
 
+ </script>    
 </html>
