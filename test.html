@@ -1,72 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>自由落体运动</title>
-    <style type="text/css">
-        body{
-            margin: 0;
-        }
-        #ball{
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            position: absolute;
-            overflow: hidden;
-            top: 0;
-            cursor: pointer;
-            background-color: black;
-        }
-        img{
-            width:169px;
-            height: 165px;
-            position: absolute;
-            left: -66px;
-            top: -23px; 
-        }
-        span{
-            width: 100%;
-            height: 1px;
-            border: 1px solid black;
-            background-color: black;
-            position: fixed;
-            top: 600px;
-            
-        }
-    </style>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>自由落体运动</title>
+        <style type="text/css">
 
-<body>
-    <div id="ball">
-        <img src="img/kwtpse1a.bmp">
-    </div>
-    <span></span>
-</body>
- <script src="MoveFrame.js"></script>
- <script type="text/javascript">
- window.addEventListener('load',function(){
-   
-    var ball=document.getElementById('ball');
-    ball.addEventListener('mousedown',function(event){
-        var target=event.target;
-        follow(this);
+        </style>
+    </head>
+
+    <body>
+        <h1>asdsadsat</h1>
+    </body>
+    <script type="text/javascript">
+        var txt = ["55sasasa454","55sasasa454dsafsafdsa","s 0jjdjjjjrfsafasftyrtgr","5dd55awgawjjjgwg","55jjrtysasasartgr","5d2352","5543","751706311@.com","8s7654safas874fsa4a4","你是个傻逼"];
         
-        console.log(this.style.left+','+ this.style.top);
-    })
- })
-function follow(obj){
-    var X=event.clientX;
-    var Y=event.clientY;
-    obj.style.left = X-obj.offsetLeft+'px';
-    obj.style.top = Y-obj.offsetTop+'px';
-    
-    console.log(obj.offsetLeft+','+ obj.offsetTop);
-    console.log(obj.style.left+','+ obj.style.top);
-}
-    
+        var reg = /^[a-z]\b\s.*j{4}.*\w$/;
+        var reg1 = /\d/g;
+        function matched(txt, reg) {
+            for (var i = 0; i < txt.length; i++) {
+                if (reg.test(txt[i])) {
+                    console.log(txt[i]);
+                    // console.log(reg.exec(txt[i]));
+                    // console.log(reg.lastIndex);
+                }
+            }
+        }
+        matched(txt, reg);
+        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        // matched(txt, reg1);
+        // console.log(reg.test(txt));
+        // console.log(txt.match(reg));
+        // alert(reg.exec(txt))
+        // if(reg.test(txt)){
+        //     console.log(txt)
+        // }
 
- </script>    
-</html>
+    </script>
+
+    </html>

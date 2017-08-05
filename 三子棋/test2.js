@@ -104,7 +104,7 @@ window.addEventListener('load', function () {
         //判断列
         for (var i = 0; i < 3; i++) {
             var first = data[i];
-            if (first === data[i + 3] && data[i + 3] === data[i + 6] && first !== undefined) {
+        if (first === data[i + 3] && data[i + 3] === data[i + 6] && first !== undefined) {
                 return first;
             }
         }
