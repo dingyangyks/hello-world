@@ -1,7 +1,7 @@
  var txt = ["55sasasa454","55sasasa454dsafsafdsa","s 0jjdjjjjrfsafasftyrtgr","5dd55awgawjjjgwg","55jjrtysasasartgr","5d2352","5543","751706311@.com","8s7654safas874fsa4a4","你是个傻逼",
             "即时比分ifhoqh5"];
         
-        var reg = /^([\u4E00-\u9FA5]){4}.*\d$/;//匹配汉字
+        var reg = /[\u4E00-\u9FA5]/;//匹配汉字
         var reg1 = /\d/g;
         function matched(txt, reg) {
             for (var i = 0; i < txt.length; i++) {
