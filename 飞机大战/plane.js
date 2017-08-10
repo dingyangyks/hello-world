@@ -1,20 +1,3 @@
-window.addEventListener('load', function () {
-    var start_btn = document.getElementById('btn');
-    start_btn.addEventListener('click', start_work);
-
-    var clcikContent = document.getElementById('content');
-    clcikContent.addEventListener('click', function () {
-        if (!startMark) {
-            return;
-        }
-        var wrap = document.getElementById('wrap')
-        wrap.style.display = 'block'; S
-    })
-
-    var pauseBtn = document.getElementById('continue');
-    pauseBtn.addEventListener('click', pause)
-})
-
 // 本飞机尺寸
 var PLANE_WIDTH = 66;
 var PLANE_HEIGHT = 80;
@@ -35,17 +18,43 @@ var MIDDLE_PLANE_HEIGHT = 60;
 // 大飞机尺寸
 var LARGE_PLANE_WIDTH = 110;
 var LARGE_PLANE_HEIGHT = 164;
-// 计时器
-var shootingTime = null;
-var makePlanesTime = null;
+
 var bulletTimer = null;
-var plane1Time = null;
-var plane2Time = null;
-var plane3Time = null;
+var shootingTime = null;
 
 var startMark = false;
 
-var plane_Time = null;
+var score = 0;
+
+window.addEventListener('load', function () {
+    // 点击开始
+    var start_btn = document.getElementById('btn');
+    start_btn.addEventListener('click', start_work);
+    // 点击暂停
+    var clcikContent = document.getElementById('content');
+    clcikContent.addEventListener('click', function () {
+        if (!startMark) {
+            return;
+        }
+        var wrap = document.getElementById('wrap')
+        wrap.style.display = 'block';
+        clearInterval(shootingTime);//停止发射
+        clearInterval(bulletTimer);
+        clearInterval(makePlanesTime);
+        clearInterval(flyTimer);
+    })
+
+
+    // 重新游戏
+    var restartBtn = document.getElementById('restart');
+    var restartBtn1 = document.getElementById('restart1');
+    restartBtn.addEventListener('click', restartFun);
+    restartBtn1.addEventListener('click', restartFun);
+
+    // 继续游戏
+    var continueBtn = document.getElementById('continue');
+    continueBtn.addEventListener('click',goOn)
+})
 
 
 
@@ -58,21 +67,35 @@ function start_work() {
     content.classList.add('run');
     // 移动飞机
     var plane = document.getElementById('plane');
+    plane.innerHTML = "<img src='img/我的飞机.gif'>";
+
+    // 飞机的初始位置
+    plane_x = screen_width / 2;
+    plane_y = screen_height * 0.85;
     plane.style.left = plane_x - (PLANE_WIDTH / 2) + 'px';
     plane.style.top = plane_y - (PLANE_HEIGHT / 2) + 'px';
     plane.addEventListener('touchmove', move_plane);
-    // 发射子弹
 
-    shootingTime = setInterval(shooting, 200);
+    var scoreMark = document.getElementById('score');
+    scoreMark.style.display = 'block';
+
+    // 创建子弹
+    shootingTime = setInterval(makeBullets, 100);
+    // makeBullets();
+    //发射子弹
+    shooting();
 
     // 显示敌机
     var enemy_planes = document.getElementById('enemy_planes');
     enemy_planes.style.display = 'block';
+
+    // 创建飞机
     makePlanesTime = setInterval(make_planes, 1000);
+    // make_planes();
+    // 发射飞机
+    flying();
     startMark = true;
 }
-
-
 
 function move_plane(event) {
     // 触点的位置
@@ -95,34 +118,60 @@ function move_plane(event) {
 
 }
 
-function shooting() {
+function makeBullets() {
+    // 创建子弹
     var bullets = document.getElementById('bullets');
     var bullet = document.createElement('span');
     bullet.classList.add('bullet');
+    bullets.appendChild(bullet);
+
     // 设置子弹的位置
     var bullet_X = plane_x - BULLET_WIDTH / 2 + 1;
     var bullet_Y = plane_y - PLANE_HEIGHT / 2 - BULLET_HEIGHT;
+    // console.log(bullet_Y)
+
     bullet.style.left = bullet_X + 'px';
     bullet.style.top = bullet_Y + 'px';
-    // bullet.dataset['bullet_X'] = bullet_X;
-    // bullet.dataset['bullet_Y'] = bullet_Y;
-    // 触电位置plane_x,plane_y有初始值，但是在飞机移动的时候会发生改变
+    // 自定义两属性记录上一次移动的值
+    bullet.dataset['bullet_X'] = bullet_X;
+    bullet.dataset['bullet_Y'] = bullet_Y;
+}
 
-    bullets.appendChild(bullet);
-    var bulletNodes = [].slice.call(bullets.querySelectorAll('.bullet'), 0);
-
-    for (var i = 0; i < bulletNodes.length; i++) {
-        var current_bullet = bulletNodes[i];
-        var current_Y = bullet_Y;
-    }
-
+function shooting() {
+    var bullets = document.getElementById('bullets');
+    var bullet = bullets.getElementsByTagName('span');
     bulletTimer = setInterval(function () {
-        current_bullet.style.top = current_Y - 30 + 'px';
-        current_Y = parseInt(current_bullet.style.top);
+        // console.log(bullet.length)
+        for (var i = 0; i < bullet.length; i++) {
+            var current_bullet = bullet[i];
+            var bullet_Y = parseInt(current_bullet.dataset.bullet_Y);
+            var newBulletY = bullet_Y - 50;
+            current_bullet.dataset.bullet_Y = newBulletY;
+            // console.log(current_bullet.dataset.bullet_Y)
+            current_bullet.style.top = newBulletY + 'px';
+        }
+        overBorder('enemy_plane1');
+        judge('enemy_plane1', SMALL_PLANE_WIDTH, SMALL_PLANE_HEIGHT);
+        overBorder('enemy_plane2');
+        judge('enemy_plane2', MIDDLE_PLANE_WIDTH, MIDDLE_PLANE_HEIGHT);
+        overBorder('enemy_plane3');
+        judge('enemy_plane3', LARGE_PLANE_WIDTH, LARGE_PLANE_HEIGHT);
     }, 50)
 }
 
-// makePlane(className,planeHeight,planeWidth)
+function make_planes() {
+    var num = Math.random();
+    if (num > 0.4) {
+        makePlane('enemy_plane1', SMALL_PLANE_WIDTH, SMALL_PLANE_HEIGHT);
+    }
+    else if (num > 0.05 && num <= 0.4) {
+        makePlane('enemy_plane2', MIDDLE_PLANE_WIDTH, MIDDLE_PLANE_HEIGHT);
+    }
+    else if (num <= 0.05) {
+        makePlane('enemy_plane3', LARGE_PLANE_WIDTH, LARGE_PLANE_HEIGHT);
+    }
+}
+
 function makePlane(className, planeWidth, planeHeight) {
     var enemy_planes = document.getElementById('enemy_planes');
     var new_enemyPlane = document.createElement('span');
@@ -139,118 +188,39 @@ function makePlane(className, planeWidth, planeHeight) {
 
     var enemy_planesNodes = [].slice.call(enemy_planes.querySelectorAll('.className'), 0);
 
-    for (var i = 0; i < enemy_planesNodes.length; i++) {
-        var current_S_plane = enemy_planesNodes[i];
-        var current_S_planeTop = enemyPlane.style.top;
-        // console.log(small_plane.style.top,current_S_planeTop)
-    }
-    // 不同飞机设置不同速度
-    if (new_enemyPlane.classList.contains('enemy_plane1')) {
-        plane1Time = setInterval(function () {
-            new_enemyPlane.style.top = PlaneY + 5 + 'px';
-            PlaneY = parseInt(new_enemyPlane.style.top);//最新的Y值
-            // 自定义记录top值的属性
-            var pauseY = new_enemyPlane.style.top;
-            new_enemyPlane.dataset['pauseY'] = new_enemyPlane.style.top;
-            // console.log(new_enemyPlane.style.top+","+new_enemyPlane.dataset['pauseY'])
-            overBorder('enemy_plane1');
-            judge('enemy_plane1', SMALL_PLANE_WIDTH, SMALL_PLANE_HEIGHT);
-        }, 50);
-    } else if (new_enemyPlane.classList.contains('enemy_plane2')) {
-        plane2Time = setInterval(function () {
-            new_enemyPlane.style.top = PlaneY + 3 + 'px';
-            PlaneY = parseInt(new_enemyPlane.style.top);
-            // 自定义记录top值的属性
-            var pauseY = new_enemyPlane.style.top;
-            new_enemyPlane.dataset['pauseY'] = new_enemyPlane.style.top;
-            overBorder('enemy_plane2');
-            judge('enemy_plane2', MIDDLE_PLANE_WIDTH, MIDDLE_PLANE_HEIGHT);
-        }, 50)
-    } else if (new_enemyPlane.classList.contains('enemy_plane3')) {
-        plane3Time = setInterval(function () {
-            new_enemyPlane.style.top = PlaneY + 1 + 'px';
-            PlaneY = parseInt(new_enemyPlane.style.top);
-            // 自定义记录top值的属性
-            var pauseY = new_enemyPlane.style.top;
-            new_enemyPlane.dataset['pauseY'] = new_enemyPlane.style.top;
-            overBorder('enemy_plane3');
-            judge('enemy_plane3', LARGE_PLANE_WIDTH, LARGE_PLANE_HEIGHT);
-        }, 50)
-    }
+    var speed;
+    var plane_Y;
+    plane_Y = -planeHeight;
+    new_enemyPlane.dataset['plane_Y'] = -planeHeight;
 
-    // planetimer(SMALL_PLANE_HEIGHT);
+    if (new_enemyPlane.classList.contains('enemy_plane1')) {
+        speed = 5;
+        new_enemyPlane.dataset['speed'] = 5;
+    } else if (new_enemyPlane.classList.contains('enemy_plane2')) {
+        speed = 3;
+        new_enemyPlane.dataset['speed'] = 3;
+    } else if (new_enemyPlane.classList.contains('enemy_plane3')) {
+        speed = 1;
+        new_enemyPlane.dataset['speed'] = 1;
+    }
 }
 
-// function planetimer(planeHeight) {
-//     var enemy_planes = document.getElementById('enemy_planes');
-//     var planes = enemy_planes.getElementsByTagName('span');
-//     var speed;
-//     var planeY;
-//     planeY = -planeHeight;
-//     for (var i = 0; i < planes.length; i++) {
-//         var planeTime = planes[i];
-//         if (planeTime.classList.contains('enemy_plane1')) {
-//             speed = 5;
-//             planeTime.dataset['speed'] = 5;
-//         } else if (planeTime.classList.contains('enemy_plane2')) {
-//             speed = 3;
-//             planeTime.dataset['speed'] = 3;
-//         } else if (planeTime.classList.contains('enemy_plane3')) {
-//             speed = 1;
-//             planeTime.dataset['speed'] = 1;
-//         }
-//     }
-//     plane_Time = setInterval(function () {
-//         planeTime.style.top = planeY + speed + 'px';
-//         planeY = parseInt(planeTime.style.top);
-//     }, 50)
-//     overBorder('enemy_plane1');
-//     judge('enemy_plane1', SMALL_PLANE_WIDTH, SMALL_PLANE_HEIGHT);
-//      overBorder('enemy_plane2');
-//     judge('enemy_plane2', MIDDLE_PLANE_WIDTH, MIDDLE_PLANE_HEIGHT);
-//     overBorder('enemy_plane3');
-//     judge('enemy_plane3', LARGE_PLANE_WIDTH, LARGE_PLANE_HEIGHT);
+function flying() {
+    var planes = document.getElementById('enemy_planes');
+    var plane = planes.getElementsByTagName('span');
+    flyTimer = setInterval(function () {
+        for (var i = 0; i < plane.length; i++) {
+            var current_plane = plane[i];
+            var plane_Y = parseInt(current_plane.dataset.plane_Y);
+            var speed = parseInt(current_plane.dataset.speed);
+            var newPlaneY = plane_Y + speed;
+            current_plane.dataset.plane_Y = newPlaneY;
+            // console.log(current_bullet.dataset.bullet_Y)
+            current_plane.style.top = newPlaneY + 'px';
+        }
 
-// }
+    }, 50)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function make_planes() {
-    var num = Math.random();
-    if (num > 0.4) {
-        makePlane('enemy_plane1', SMALL_PLANE_WIDTH, SMALL_PLANE_HEIGHT);
-    }
-    else if (num > 0.05 && num <= 0.4) {
-        makePlane('enemy_plane2', MIDDLE_PLANE_WIDTH, MIDDLE_PLANE_HEIGHT);
-
-    }
-    else if (num <= 0.05) {
-        makePlane('enemy_plane3', LARGE_PLANE_WIDTH, LARGE_PLANE_HEIGHT);
-
-    }
 }
 
 function overBorder(className) {
@@ -271,10 +241,15 @@ function overBorder(className) {
     }
 }
 
-// judge(className)
 function judge(className, planeWidth, planeHeight) {
     var currentBullets = document.getElementsByClassName('bullet');
     var currentPlane = document.getElementsByClassName(className);
+
+    var myPlane = document.getElementById('plane');
+    var myPlaneHead = parseInt(myPlane.style.top);
+    var myPlaneLeft = parseInt(myPlane.style.left);
+    var myPlaneTail = parseInt(myPlane.style.top) + PLANE_HEIGHT;
+
     for (var i = 0; i < currentBullets.length; i++) {
         var disappearBullet = currentBullets[i]
         var bulletHead = parseInt(disappearBullet.style.top);
@@ -282,9 +257,10 @@ function judge(className, planeWidth, planeHeight) {
         for (var j = 0; j < currentPlane.length; j++) {
             var disappearPlane = currentPlane[j];
             var planeHead = parseInt(disappearPlane.style.top) + planeHeight;
+            var planeTail = parseInt(disappearPlane.style.top);
             var planeLeft = parseInt(disappearPlane.style.left);
 
-            if (planeHead >= bulletHead && bulletLeft < planeLeft + planeWidth && bulletLeft > planeLeft - BULLET_WIDTH) {
+            if (planeHead >= bulletHead && bulletLeft < planeLeft + planeWidth && bulletLeft > planeLeft - BULLET_WIDTH && planeHead < myPlaneHead) {
                 var hitTimes = disappearPlane.dataset.hitTime;
                 if (disappearBullet.parentNode != null) {
                     var old_bullet = disappearBullet.parentNode.removeChild(disappearBullet);
@@ -300,14 +276,20 @@ function judge(className, planeWidth, planeHeight) {
                     planeBoomFunction(disappearPlane);
                 }
             }
+            if (myPlaneHead <= planeHead && myPlaneLeft < planeLeft + planeWidth && myPlaneLeft + PLANE_WIDTH > planeLeft && myPlaneTail > planeTail) {
+                myPlane.innerHTML = "<img src='img/myself_boom.gif'>";
+                clearInterval(shootingTime);//停止发射
+                clearInterval(bulletTimer);
+                clearInterval(makePlanesTime);
+                clearInterval(flyTimer);
+                var gameOver = document.getElementById('gameOver');
+                var endScore = document.getElementById('endScore');
+                endScore.innerHTML = '分数：' + score;
+                gameOver.style.display = 'block';
+
+            }
         }
     }
-}
-
-
-
-function boomMyself() {
-
 }
 
 function planeBoomFunction(obj, className) {
@@ -324,224 +306,79 @@ function planeBoomFunction(obj, className) {
     }
 }
 
+
 function removePlane(obj) {
-    var plane1Time = null;
-    plane1Time = setTimeout(function () {
+    // 这个定时器是为了让爆炸动画放完在移除
+    setInterval(function () {
         if (obj.parentNode != null) {
             var oldSmallPlane = obj.parentNode.removeChild(obj);
+            if (oldSmallPlane.classList.contains('enemy_plane1')) {
+                score += 100;
+            }
+            if (oldSmallPlane.classList.contains('enemy_plane2')) {
+                score += 300;
+            }
+            if (oldSmallPlane.classList.contains('enemy_plane3')) {
+                score += 500;
+            }
+            var scoreMark = document.getElementById('score');
+            scoreMark.style.display = 'block';
+            scoreMark.innerHTML = '分数：' + score;
             oldSmallPlane = null;
-            clearTimeout(plane1Time);
         }
     }, 200)
 }
 
-// function pause(){
-//     var enemy_planes = document.getElementById('enemy_planes');
-//     var planes = enemy_planes.getElementsByTagName('span');
-//     alert('asfa')
-// }
+function restartFun() {
+    // 恢复飞机位置
+    var myPlane = document.getElementById('plane');
+    plane.style.left = plane_x - (PLANE_WIDTH / 2) + 'px';
+    plane.style.top = plane_y - (PLANE_HEIGHT / 2) + 'px';
 
+    // 显示开始按钮
+    var start_btn = document.getElementById('btn');
+    start_btn.style.display = 'block';
+    // 更换背景
+    var content = document.getElementById('content');
+    content.classList.remove('run');
+    // 弹窗消失
+    var gameOver = document.getElementById('gameOver');
+    gameOver.style.display = 'none';
+    var wrap = document.getElementById('wrap');
+    wrap.style.display = 'none';
+    // 分数清零
+    var scoreMark = document.getElementById('score');
+    scoreMark.style.display = 'none';
+    score = 0;
+    scoreMark.innerHTML = '分数：' + score;
 
+    // 移除所有飞机
+    var enemy_planes = document.getElementById('enemy_planes');
+    var planes = enemy_planes.getElementsByTagName('span');
+    for (var i = planes.length - 1; i >= 0; i--) {
+        enemy_planes.removeChild(planes[i]);
+    }
+    // 移除所有子弹
+    var bullets = document.getElementById('bullets');
+    var bullet = bullets.getElementsByTagName('span');
+    for (var i = bullet.length - 1; i >= 0; i--) {
+        bullets.removeChild(bullet[i]);
+    }
+    startMark = false;
+    console.log("执行了重新开始")
+}
 
+function goOn(){
+    // 影藏弹窗
+    var wrap = document.getElementById('wrap')
+    wrap.style.display = 'none';
 
+    var bullets = document.getElementById('bullets');
+    var bullet = bullets.getElementsByTagName('span');
 
+    shootingTime = setInterval(makeBullets, 100);
+    shooting();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function planeSpeed(className, planeHeight) {
-//     var enemyPlane = document.getElementsByClassName(className);
-//     var PlaneY = -planeHeight;
-//     var speedTimwer = null;
-//     for (var i = 0; i < enemyPlane.length; i++) {
-//         var SpeedEnemyPlane = enemyPlane[i];
-//         if (SpeedEnemyPlane.classList.contains('enemy_plane1')) {
-//             speedTimwer = setInterval(function () {
-//                 SpeedEnemyPlane.style.top = PlaneY + 2 + 'px';
-//                 PlaneY = parseInt(SpeedEnemyPlane.style.top);
-//                 overBorder('enemy_plane1');
-//                 judge('enemy_plane1', SMALL_PLANE_WIDTH, SMALL_PLANE_HEIGHT);
-//                 clearInterval(speedTimwer);
-//             }, 50)
-//         }
-//     }
-// }
-
-// setInterval(function () {
-//     new_enemyPlane.style.top = PlaneY + 2 + 'px';
-//     PlaneY = parseInt(new_enemyPlane.style.top);
-//     // 判断飞机是否被击中 或者飞出屏幕
-//     overBorder('enemy_plane1');
-//     overBorder('enemy_plane2');
-//     overBorder('enemy_plane3');
-//     judge('enemy_plane1', SMALL_PLANE_WIDTH, SMALL_PLANE_HEIGHT);
-//     judge('enemy_plane2', MIDDLE_PLANE_WIDTH, MIDDLE_PLANE_HEIGHT);
-//     judge('enemy_plane3', LARGE_PLANE_WIDTH, LARGE_PLANE_HEIGHT);
-// }, 50)
-// planeBoomFunction(disappearPlane);
-// planeBoomFunction(disappearPlane);
-// planeBoomFunction(disappearPlane);
-
-// function removeBullet() {
-//     var currentPlane = document.getElementsByClassName('span');
-//     for (var i = 0; i < currentPlane.length; i++) {
-//         var disappearPlane = currentPlane[i];
-//         var hitTimes = disappearPlane.dataset.hitTime;
-//         console.log(hitTimes)
-//         if (disappearPlane.parentNode != null) {
-//             var old_bullet = disappearPlane.parentNode.removeChild(disappearPlane);
-//             old_bullet = null;
-//             disappearPlane.dataset.hitTime++;
-//         }
-//         console.log(hitTimes);
-//         if (hitTimes >= 1 && disappearPlane.classList.contains('enemy_plane1')) {
-//             planeBoomFunction(disappearPlane);
-
-//         } else if (hitTimes >= 4 && disappearPlane.classList.contains('enemy_plane2')) {
-//             planeBoomFunction(disappearPlane);
-//             console.log(hitTimes);
-//         } else if (hitTimes >= 8 && disappearPlane.classList.contains('enemy_plane3')) {
-//             planeBoomFunction(disappearPlane);
-//             console.log(hitTimes);
-//         }
-//     }
-// }
-
-
-// planeBoomFunction()
-
-// var plane1Time = null;
-//         plane1Time = setTimeout(function () {
-//             if (obj.parentNode != null) {
-//                 var oldSmallPlane = obj.parentNode.removeChild(obj);
-//                 oldSmallPlane = null;
-//                 clearTimeout(plane1Time);
-//             }
-//         }, 200)
-// if (disappearBullet.parentNode != null) {
-//     var old_bullet = disappearBullet.parentNode.removeChild(disappearBullet);
-//     old_bullet = null;
-//     life++;
-//     console.log(life);
-// }
-// function killLife(bj,){
-//     var plane1Time = null;
-//     plane1Time = setTimeout(function () {
-//         var life = 0;
-//         if (obj.parentNode != null) {
-//             var oldSmallPlane = obj.parentNode.removeChild(obj);
-//             life
-//             oldSmallPlane = null;
-//             clearTimeout(plane1Time);
-//         }
-//     }, 200)
-// }
-
-
-// function judge() {
-//     var currentBullets = document.getElementsByClassName('bullet');
-//     var currentPlane1 = document.getElementsByClassName('enemy_plane1');
-//     // console.log(currentPlane[0].style.top);
-//     for (var i = 0; i < currentBullets.length; i++) {
-//         var disappearBullet_1 = currentBullets[i]
-//         var S_bulletHead = parseInt(disappearBullet_1.style.top);
-//         var S_bulletLeft = parseInt(disappearBullet_1.style.left);
-//         for (var j = 0; j < currentPlane1.length; j++) {
-//             var disappearPlane_1 = currentPlane1[j];
-//             var S_planeHead = parseInt(disappearPlane_1.style.top) + SMALL_PLANE_HEIGHT;
-//             var S_planeLeft = parseInt(disappearPlane_1.style.left);
-//             // console.log(parseInt(disappearPlane_1.style.top))
-//             // console.log(screen_height)
-//             if (S_planeHead >= S_bulletHead && S_bulletLeft < S_planeLeft + SMALL_PLANE_WIDTH && S_bulletLeft > S_planeLeft - BULLET_WIDTH) {
-//                 plane1BoomFunction(disappearPlane_1);
-//                 if (disappearBullet_1.parentNode != null) {
-//                     var old_bullet = disappearBullet_1.parentNode.removeChild(disappearBullet_1);
-//                     old_bullet = null;
-//                 }
-//             }
-//         }
-//     }
-// }
-
-
-// function removeBullet(obj2) {
-//     if (parseInt(obj2.style.top) < -BULLET_HEIGHT) {
-//         var old_bullet = obj2.parentNode.removeChild(obj2);
-//         old_bullet = null;
-//     }
-// }
-
-// function removePlane(obj1){
-//     if(parseInt(obj1.style.top) > screen_height && obj1.parentNode != null){
-//         console.log("safasfasf");
-//         var old_plane = obj1.parentNode.removeChild(obj1);
-//         old_plane = null;
-
-//     }
-// }
-
-// function make_middle_plane() {
-//     var middle_enemy_plane = document.createElement('span');
-//     middle_enemy_plane.classList.add('enemy_plane2');
-//     enemy_planes.appendChild(middle_enemy_plane);
-//     console.log("2");
-// }
-
-// function make_large_plane() {
-//     var large_enemy_plane = document.createElement('span');
-//     large_enemy_plane.classList.add('enemy_plane3');
-//     enemy_planes.appendChild(large_enemy_plane)
-//     console.log("3");
-// }
-
-
-// function make_small_plane() {
-//     var small_plane = document.createElement('span');//小飞机对象
-//     small_plane.classList.add('enemy_plane1');
-
-//     var smallPlaneY = 0;// -SMALL_PLANE_Y
-//     var smallPlaneX = Math.floor(Math.random() * (screen_width - SMALL_PLANE_WIDTH));
-//     small_plane.style.top = smallPlaneY + 'px';// -SMALL_PLANE_Y 
-//     small_plane.style.left = smallPlaneX + 'px';
-
-//     enemy_planes.appendChild(small_plane);
-
-//     var enemy_planesNodes = [].slice.call(enemy_planes.querySelectorAll('.enemy_plane1'), 0);
-
-//     for (var i = 0; i < enemy_planesNodes.length; i++) {
-//         var current_S_plane = enemy_planesNodes[i];
-//         var current_S_planeTop = small_plane.style.top;
-//         // console.log(small_plane.style.top,current_S_planeTop)
-//     }
-//     setInterval(function () {
-//         small_plane.style.top = smallPlaneY + 10 + 'px';
-//         smallPlaneY = parseInt(small_plane.style.top);
-//         // 判断飞机是否被击中 或者飞出屏幕
-//         judge();
-//     }, 1000)
-// }
+    makePlanesTime = setInterval(make_planes, 1000);
+    flying();
+}

@@ -158,3 +158,63 @@ body{
     transform: translate(-50%,614%);
     left: 50%;
 }
+
+/*分数*/
+#score{
+    position: absolute;
+    display: none;
+    z-index: 99;
+}
+
+/*结束*/
+#gameOver{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    position: absolute;
+    display: none;
+}
+
+.over{
+    width: 60%;
+    height: 40%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+    border: 1px solid black;
+    border-radius: 15px;
+    background-color: #c3c8c9;
+    /*display: none;*/
+}
+
+.over span{
+    display: inline-block;
+    position: absolute;
+    width: 70%;
+    font-size: 30px;
+    text-align: center;
+    transform: translate(-50%,70%);
+    left: 50%;
+}
+
+.over div{
+    position: absolute;
+    width: 60%;
+    height: 11%;
+    font-size: 20px;
+    border: 1px solid black;
+    border-radius: 15px;
+    text-align: center;
+    line-height: 170%;
+}
+
+#endScore{
+    transform: translate(-50%,367%);
+    left: 50%;
+}
+
+#restart1{
+    transform: translate(-50%,614%);
+    left: 50%;
+}
