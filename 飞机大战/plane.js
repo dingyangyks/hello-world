@@ -18,13 +18,18 @@ var MIDDLE_PLANE_HEIGHT = 60;
 // 大飞机尺寸
 var LARGE_PLANE_WIDTH = 110;
 var LARGE_PLANE_HEIGHT = 164;
-
+// 定时器
 var bulletTimer = null;
 var shootingTime = null;
-
+var flyTimer = null;
+var makePlanesTime = null;
+var timeTimer = null;
+// 开始记号
 var startMark = false;
-
+//分数记录
 var score = 0;
+//飞机加速度
+var timerSpeed = 50;
 
 window.addEventListener('load', function () {
     // 点击开始
@@ -42,6 +47,7 @@ window.addEventListener('load', function () {
         clearInterval(bulletTimer);
         clearInterval(makePlanesTime);
         clearInterval(flyTimer);
+        // clearInterval(timeTimer);
     })
 
 
@@ -53,7 +59,7 @@ window.addEventListener('load', function () {
 
     // 继续游戏
     var continueBtn = document.getElementById('continue');
-    continueBtn.addEventListener('click',goOn)
+    continueBtn.addEventListener('click', goOn)
 })
 
 
@@ -65,6 +71,9 @@ function start_work() {
     // 更换背景并滚动
     var content = document.getElementById('content');
     content.classList.add('run');
+    // 显示计分
+    var scoreMark = document.getElementById('score');
+    scoreMark.style.display = 'block';
     // 移动飞机
     var plane = document.getElementById('plane');
     plane.innerHTML = "<img src='img/我的飞机.gif'>";
@@ -75,9 +84,6 @@ function start_work() {
     plane.style.left = plane_x - (PLANE_WIDTH / 2) + 'px';
     plane.style.top = plane_y - (PLANE_HEIGHT / 2) + 'px';
     plane.addEventListener('touchmove', move_plane);
-
-    var scoreMark = document.getElementById('score');
-    scoreMark.style.display = 'block';
 
     // 创建子弹
     shootingTime = setInterval(makeBullets, 100);
@@ -90,6 +96,7 @@ function start_work() {
     enemy_planes.style.display = 'block';
 
     // 创建飞机
+    console.log(score);
     makePlanesTime = setInterval(make_planes, 1000);
     // make_planes();
     // 发射飞机
@@ -133,7 +140,6 @@ function makeBullets() {
     bullet.style.left = bullet_X + 'px';
     bullet.style.top = bullet_Y + 'px';
     // 自定义两属性记录上一次移动的值
-    bullet.dataset['bullet_X'] = bullet_X;
     bullet.dataset['bullet_Y'] = bullet_Y;
 }
 
@@ -205,10 +211,21 @@ function makePlane(className, planeWidth, planeHeight) {
     }
 }
 
+
+function timerSpeedFun() {
+    setInterval(function () {
+        timerSpeed -= 1;
+        console.log(timerSpeed)
+    }, 5000)
+}
+
+
 function flying() {
     var planes = document.getElementById('enemy_planes');
     var plane = planes.getElementsByTagName('span');
+
     flyTimer = setInterval(function () {
+        
         for (var i = 0; i < plane.length; i++) {
             var current_plane = plane[i];
             var plane_Y = parseInt(current_plane.dataset.plane_Y);
@@ -217,10 +234,15 @@ function flying() {
             current_plane.dataset.plane_Y = newPlaneY;
             // console.log(current_bullet.dataset.bullet_Y)
             current_plane.style.top = newPlaneY + 'px';
+
+            if(score > 1000){
+                timerSpeed = 10;
+                clearInterval(flyTimer)
+                flyTimer = setInterval(arguments.callee,timerSpeed);
+                console.log("正是:"+timerSpeed)
+            }
         }
-
-    }, 50)
-
+    }, timerSpeed);
 }
 
 function overBorder(className) {
@@ -286,7 +308,6 @@ function judge(className, planeWidth, planeHeight) {
                 var endScore = document.getElementById('endScore');
                 endScore.innerHTML = '分数：' + score;
                 gameOver.style.display = 'block';
-
             }
         }
     }
@@ -325,6 +346,9 @@ function removePlane(obj) {
             scoreMark.style.display = 'block';
             scoreMark.innerHTML = '分数：' + score;
             oldSmallPlane = null;
+            if (score > 500) {
+                timerSpeed = 10;
+            }
         }
     }, 200)
 }
@@ -351,7 +375,8 @@ function restartFun() {
     scoreMark.style.display = 'none';
     score = 0;
     scoreMark.innerHTML = '分数：' + score;
-
+    // 恢复飞机加速度
+    // timerSpeed = 50;
     // 移除所有飞机
     var enemy_planes = document.getElementById('enemy_planes');
     var planes = enemy_planes.getElementsByTagName('span');
@@ -368,13 +393,10 @@ function restartFun() {
     console.log("执行了重新开始")
 }
 
-function goOn(){
+function goOn() {
     // 影藏弹窗
     var wrap = document.getElementById('wrap')
     wrap.style.display = 'none';
-
-    var bullets = document.getElementById('bullets');
-    var bullet = bullets.getElementsByTagName('span');
 
     shootingTime = setInterval(makeBullets, 100);
     shooting();

@@ -86,10 +86,10 @@ window.addEventListener('load', function () {
 
     })
 
-    function showWinner(messgage){
+    function showWinner(message){
         setTimeout(function(){
             oWrap.style.display = "block";
-            txtP.innerHTML = messgage ;
+            txtP.innerHTML = message ;
         },200)
     }
 
