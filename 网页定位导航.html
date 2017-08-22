@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        body,
+        li,
+        ul,
+        a {
+            padding: 0;
+            margin: 0;
+            text-decoration: none;
+            list-style: none;
+            font-size: 17px;
+            color: #000;
+        }
+
+        h1 {
+            font-size: 22px;
+            border-bottom: 2px solid #487;
+        }
+
+        img {
+            width: 230px;
+            height: 230px;
+        }
+
+        .item {
+            width: 800px;
+            margin: 0 auto;
+            padding: 10px;
+            border: 1px solid #aaa;
+        }
+
+        .item ul {
+            font-size: 0;
+        }
+
+        .item ul li {
+            display: inline-block;
+            margin: 10px;
+        }
+
+        .item ul li a {
+            display: block;
+        }
+
+        .menu {
+            position: fixed;
+            left: 50%;
+            top: 5%;
+            margin-left: 420px;
+            color: #fff;
+        }
+
+        .menu li {
+            width: 50px;
+            border: 1px solid #aaa;
+            text-align: center;
+        }
+
+        .menu li a {
+            display: block;
+        }
+
+        /*.menu li:hover>a,*/
+        .current {
+            color: #fff;
+            background-color: #487;
+        }
+    </style>
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.js"></script>
+</head>
+<body>
+    <div id="content">
+        <div class="item" id="item1">
+            <h1>男装</h1>
+            <ul>
+                <li><a href="#"><img src="无缝滚动图片/1.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/1.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/1.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/1.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/1.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/1.jpg"></a></li>
+            </ul>
+        </div>
+        <div class="item" id="item2">
+            <h1>女装</h1>
+            <ul>
+                <li><a href="#"><img src="无缝滚动图片/2.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/2.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/2.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/2.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/2.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/2.jpg"></a></li>
+            </ul>
+        </div>
+        <div class="item" id="item3">
+            <h1>美妆</h1>
+            <ul>
+                <li><a href="#"><img src="无缝滚动图片/3.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/3.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/3.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/3.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/3.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/3.jpg"></a></li>
+            </ul>
+        </div>
+        <div class="item" id="item4">
+            <h1>数码</h1>
+            <ul>
+                <li><a href="#"><img src="无缝滚动图片/4.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/4.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/4.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/4.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/4.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/4.jpg"></a></li>
+            </ul>
+        </div>
+        <div class="item" id="item5">
+            <h1>母婴</h1>
+            <ul>
+                <li><a href="#"><img src="无缝滚动图片/5.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/5.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/5.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/5.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/5.jpg"></a></li>
+                <li><a href="#"><img src="无缝滚动图片/5.jpg"></a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="menu" class="menu">
+        <ul>
+            <li><a href="#item1" class="current">男装</a></li>
+            <li><a href="#item2">女装</a></li>
+            <li><a href="#item3">美妆</a></li>
+            <li><a href="#item4">数码</a></li>
+            <li><a href="#item5">母婴</a></li>
+        </ul>
+    </div>
+    <script type="text/javascript">    
+        window.addEventListener('load',function(){
+            window.addEventListener('scroll',function(){
+                var top = document.body.scrollTop;//document.documentElement.scrollTop
+                var content = document.getElementById('content');
+                var aItem  = content.getElementsByClassName('item');
+                var meauItem = document.getElementById('menu');
+                var aMeau = meauItem.getElementsByTagName('a');
+                var currentIndex;
+                for(var i = 0; i < aItem.length; i++){
+                    // 获得每个模块的top值
+                    var itemTop = aItem[i].offsetTop;
+                    // 何及时滚动的滚动条高度进行比较
+                    if(top > itemTop - 550){
+                        currentIndex = i;
+                        for(var j = 0; j < aMeau.length; j++){
+                            aMeau[j].classList.remove("current");
+                        }
+                        aMeau[currentIndex].classList.add('current');
+                    }else{
+                        return;
+                    }
+                }
+            })
+        })
+    </script>
+
+    <!--<script type="text/javascript">
+        $(document).ready(function () {
+            $(window).scroll(function () {
+                var top = $(document).scrollTop();
+                var menu = $('#menu');
+                var item = $('#content').find('.item');
+                var currentIndex = '';
+                // 进行判断
+                item.each(function(){
+                    var itemTop = $(this).offset().top;
+                    if(top > itemTop - 550){
+                        currentIndex = '#' + $(this).attr('id');//找到了当前滚动到的楼层
+                    }
+                    var currentLink = menu.find('.current');
+                    if(currentLink.attr('href') !== currentIndex){
+                        currentLink.removeClass('current');
+                        menu.find("[href=" + currentIndex + "]").addClass('current');
+                    }
+                })
+            })
+        })
+    </script>-->
+</body>
+
+</html>
