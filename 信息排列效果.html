@@ -1,0 +1,235 @@
+<html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .btnbox {
+            height: 40px;
+        }
+
+        .btn {
+            width: 16px;
+            height: 16px;
+            border: 1px solid black;
+            float: right;
+            margin: 5px;
+            display: block;
+        }
+
+        p {
+            font-size: 16px;
+        }
+
+        .content {
+            width: 860px;
+            margin: 0 auto;
+            border: 1px solid black;
+        }
+
+        li {
+            display: inline-block;
+            list-style: none;
+            width: 200px;
+            height: auto;
+            border: 1px solid #000;
+            margin: 5px;
+        }
+
+        .img_box {
+            display: block;
+            width: 100%;
+            height: 182px;
+            overflow: hidden;
+        }
+
+        .car_box {
+            display: block;
+            width: 30%;
+            height: 80px;
+            overflow: hidden;
+            float: left;
+        }
+
+        button {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div class="btnbox">
+            <a id="btn1" class="btn"></a>
+            <a id="btn2" class="btn"></a>
+        </div>
+        <ul>
+            <li class="news">
+                <div>
+                    <a href="" class="car_box imgs">
+                        <img src="无缝滚动图片/1.jpg">
+                    </a>
+                    <p>
+                        <a href="#">白羊</a></br>
+                        <span>梁宁</span></br>
+                        <span>21个共同好友</span>
+                    </p>
+                    <button>未分组的好友</button>
+                </div>
+            </li>
+            <li class="news">
+                <div>
+                    <a href="" class="car_box imgs">
+                        <img src="无缝滚动图片/1.jpg">
+                    </a>
+                    <p>
+                        <a href="#">白羊</a></br>
+                        <span>梁宁</span></br>
+                        <span>21个共同好友</span>
+                    </p>
+                    <button>未分组的好友</button>
+                </div>
+            </li>
+            <li class="news">
+                <div>
+                    <a href="" class="car_box imgs">
+                        <img src="无缝滚动图片/1.jpg">
+                    </a>
+                    <p>
+                        <a href="#">白羊</a></br>
+                        <span>梁宁</span></br>
+                        <span>21个共同好友</span>
+                    </p>
+                    <button>未分组的好友</button>
+                </div>
+            </li>
+            <li class="news">
+                <div>
+                    <a href="" class="car_box imgs">
+                        <img src="无缝滚动图片/1.jpg">
+                    </a>
+                    <p>
+                        <a href="#">白羊</a></br>
+                        <span>梁宁</span></br>
+                        <span>21个共同好友</span>
+                    </p>
+                    <button>未分组的好友</button>
+                </div>
+            </li>
+            <li class="news">
+                <div>
+                    <a href="" class="car_box imgs">
+                        <img src="无缝滚动图片/1.jpg">
+                    </a>
+                    <p>
+                        <a href="#">白羊</a></br>
+                        <span>梁宁</span></br>
+                        <span>21个共同好友</span>
+                    </p>
+                    <button>未分组的好友</button>
+                </div>
+            </li>
+            <li class="news">
+                <div>
+                    <a href="" class="car_box imgs">
+                        <img src="无缝滚动图片/1.jpg">
+                    </a>
+                    <p>
+                        <a href="#">白羊</a></br>
+                        <span>梁宁</span></br>
+                        <span>21个共同好友</span>
+                    </p>
+                    <button>未分组的好友</button>
+                </div>
+            </li>
+            <li class="news">
+                <div>
+                    <a href="" class="car_box imgs">
+                        <img src="无缝滚动图片/1.jpg">
+                    </a>
+                    <p>
+                        <a href="#">白羊</a></br>
+                        <span>梁宁</span></br>
+                        <span>21个共同好友</span>
+                    </p>
+                    <button>未分组的好友</button>
+                </div>
+            </li>
+            <li class="news">
+                <div>
+                    <a href="" class="car_box imgs">
+                        <img src="无缝滚动图片/1.jpg">
+                    </a>
+                    <p>
+                        <a href="#">白羊</a></br>
+                        <span>梁宁</span></br>
+                        <span>21个共同好友</span>
+                    </p>
+                    <button>未分组的好友</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!--<script type="text/javascript">
+        var aImgs = document.getElementsByClassName('imgs');
+        var btn1 = document.getElementById('btn1');
+        var btn2 = document.getElementById('btn2')
+        console.log(aImgs.length)
+        btn1.addEventListener('click',function(){
+            console.log(aImgs.length)
+            for(var i = 0; i < aImgs.length; i++){
+                if(aImgs[i].classList.contains('img_box')){
+                    break;
+                }else{
+                    aImgs[i].classList.remove('car_box');
+                    aImgs[i].classList.add('img_box');
+                }
+            }
+        })
+        btn2.addEventListener('click',function(){
+            console.log(aImgs.length)
+            for(var i = 0; i < aImgs.length; i++){
+                if(aImgs[i].classList.contains('car_box')){
+                    break;
+                }else{
+                    aImgs[i].classList.remove('img_box');
+                    aImgs[i].classList.add('car_box');
+                }
+            }
+        })
+    </script>-->
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            // 选出按钮给它绑定事件
+            $('#btn2').on('click',function(){
+                // 遍历
+                $('.imgs').each(function(){
+                    // $(this).toggleClass('car_box img_box');
+                    $(this).removeClass('car_box');
+                    $(this).addClass('img_box');         
+                })
+            })
+            $('#btn1').click(function(){
+                // 遍历
+                // $('#btn2').off();
+                $('.imgs').each(function(){
+                    // $(this).toggleClass('car_box img_box');
+                    $(this).removeClass('img_box');
+                    $(this).addClass('car_box');         
+                })
+            })
+           
+        })
+    </script>
+</body>
+
+</html>
