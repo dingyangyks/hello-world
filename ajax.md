@@ -14,7 +14,8 @@
 ## `send()`方法
 接受一个参数:作为请求主体发送的数据,如果不需要发送数据则必须传入`null`,因为这个参数对某些浏览器来说是必须的  
 调`send()`方法后请求就被发送到服务器,在收到响应后,响应的数据会自动填充xhr对象的属性:  相关属性:
-* `responseText`:作为响应主题被返回的文本,***无论响应内容的类型是什么,响应主体内容都会保存在`responseText`属性中,而对于非XML数据而言,`responseXML`属性值将为`null`,***
+* `responseText`:作为响应主题被返回的文本,***无论响应内容的类型是什么,响应主体内容都会保存在`responseText`属性中,而对于非XML数据而言,`responseXML`属性值将为`null`,***  
+***`responseText`是一个长字符串,需要把它转换称`json`,利用`JSON.parse(xhr.responseText)`***
 * `responseXML`:如果响应内容类型是"text/xml"或"application/xml",这个属性将保存还有响应数据的XML DOM文档.
 * `status`:响应http的状态
 * `statusText`:http状态说明
