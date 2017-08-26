@@ -99,7 +99,7 @@
         }
     </style>
     <script src="http://libs.baidu.com/jquery/1.9.1/jquery.js"></script>
-    <script src="bing 搜索.js"></script>
+    <!--<script src="bing 搜索.js"></script>-->
 </head>
 
 <body>
@@ -119,7 +119,7 @@
             </div>
         </div>
     </div>
-    <!--<script type="text/javascript">
+    <script type="text/javascript">
         var key = '49295dbc48ec47c5a7f52c1502f8db7f';
         var url = 'https://api.cognitive.microsoft.com/bing/v5.0/suggestions?q=';
         var aimUrl = 'http://cn.bing.com/search?q=';
@@ -147,7 +147,6 @@
 
             //点击推荐词条 跳转到搜索结果页
             $('#search_result').delegate('li', 'click', function () {
-                console.log($(this))
                 var resultPage = $(this).text();
                 location.href = aimUrl + resultPage;
             })
@@ -170,7 +169,6 @@
                     }
                     $('#search_result li.changeStyle').removeClass('changeStyle');
                     if (num !== -1) {
-                        console.log(num)
                         var select = $('#search_result li').eq(num);
                         select.addClass('changeStyle');
                         $('#input_text').val(select.html());
@@ -216,7 +214,7 @@
                 }
             })
         }
-    </script>-->
+    </script>
 </body>
 
 </html>
