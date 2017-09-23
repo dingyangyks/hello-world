@@ -1,0 +1,62 @@
+body{
+    padding: 20px;
+    background-color: #e8c8a7;
+}
+
+.gameBox{
+    width: 250px;
+    height: 500px;
+    margin: 0 auto;
+    border: 1px solid #333;
+    background-color: #fff;
+    position: relative;
+}
+
+.wrap{
+    overflow: hidden;
+}
+
+.info{
+    margin: 0 0 20px 35px;
+    font-size: 20px;
+    font-weight: bold;
+    float: left;
+}
+
+.info div{
+    margin: 10px 0;
+}
+
+.nextBox{
+    width: 100px;
+    height: 100px;
+    margin: 0 35px 0 20px;
+    border: 1px solid #333;
+    float: left;
+    background-color: #fff;  
+    position: relative;  
+}
+
+.flying,.none,.stopped{
+    width: 25px;
+    height: 25px;
+    box-sizing: border-box;
+    float: left;    
+    position: absolute;
+}
+
+.flying{
+    background-color: #f7b869;
+    border: 1px solid #333;
+}
+
+.none{
+    background-color: #fff;
+}
+
+.stopped {
+    background-color: #c9b5d8;;
+    border: 1px solid #333;
+}
+
+

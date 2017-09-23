@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script>
+        function loadXMLDoc() {
+            var txt;
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://api.github.com/users/dingyangyks/repos');
+            // xhr.setRequestHeader("CONTENT-TYPE", "application/json; charset=utf-8");
+            xhr.send();
+            // xhr.overrideMimeType('application/json', );
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status === 200) {
+                    xmlDoc = JSON.parse(xhr.responseText);
+                    
+                    // x = xmlDoc.getElementsByTagName("name");
+                    for (var i = 0; i < xmlDoc.length; i++) {
+                        document.getElementById("mytxt").innerHTML +="第"+(i+1)+"个项目是："+ xmlDoc[i].name+"</br>";
+                    }
+                    console.log(typeof xmlDoc);
+                    console.log(xmlDoc[3].name); 
+                    
+                }
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <div id="myDiv">
+        <form action="http://wwww.baidu.com" method="GET">
+            <button type="button" onclick="loadXMLDoc()">获得项目名称</button></br>
+            账号：<input type="text" name="ding" autofocus required></br>
+            密码：<input type="password" name="key"></br>
+            <input type="submit">
+            <input type="reset"></br>
+            <input type="text" readonly value="sajkhfjkashfkj"></br>
+            <input type="text" tabindex="1"></br>
+            <input type="text" disabled></br>
+            <select name="" id="">
+                <option value="">ashdjsahf</option>
+                <option value="">ashdjsahf</option>
+                <option value="">ashdjsahf</option>
+                <option value="">ashdjsahf</option>
+                <option value="">ashdjsahf</option>
+                <option value="">ashdjsahf</option>
+            </select></br>
+            <textarea name="" id="mytxt"  size="10" maxlength="15"></textarea>
+            <!--cols="30" rows="10"-->
+        </form>
+    </div>
+    
+</body>
+
+</html>
