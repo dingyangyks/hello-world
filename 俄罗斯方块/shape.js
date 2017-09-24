@@ -1,7 +1,7 @@
 // 图形类
 function Shape() {
-    // 等待存放新产生的数组
-    this.newData = [];
+    // // 等待存放新产生的数组
+    // this.newData = [];
 
     // 设置原点
     this.origin = {
@@ -11,16 +11,22 @@ function Shape() {
 }
 
 Shape.prototype = {
-    down: function () {
+    canDown: function () {
+        var test = {};
         this.origin.x += 1;
+        // return checkVlaue(test,this)
     },
-    left: function () {
-
+    canLeft: function () {
+        if (this.origin.y > -1) {
+            this.origin.y -= 1;
+        }
     },
-    right: function () {
-
+    canRight: function () {
+        if (this.origin.y < 7) {
+            this.origin.y += 1;
+        }
     },
-    roate:function () {
+    canRoate:function () {
 
     }
 }
