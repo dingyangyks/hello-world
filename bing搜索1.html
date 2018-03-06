@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>bing 1</title>
+    <style type="text/css">
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            font-size: 20px;
+        }
+
+        ul,
+        li {
+            list-style: none;
+        }
+
+        .desk {
+            width: 100%;
+            height: 100%;
+            /*width: 2560px;
+            height: 1086px;*/
+            background-image: url(img/timg1.jpg);
+            background-repeat: no-repeat;
+        }
+
+        .logo {
+            background-image: url(img/logo.png);
+            background-repeat: no-repeat;
+            float: left;
+            width: 107px;
+            height: 53px;
+        }
+
+        .seach_form {
+            float: left;
+            width: 400px;
+            height: 40px;
+            margin-left: 20px;
+            margin-top: 8px;
+            background-color: #fff;
+        }
+
+        .input_text {
+            margin-top: 2px;
+            margin-left: 5px;
+            border: none;
+            float: left;
+            outline: none;
+            height: 36px;
+            width: 350px;
+        }
+
+        .input_btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            float: right;
+            line-height: 40px;
+            background-color: #fff;
+            background-image: url(img/cn_searchbt_hp.png);
+            background-position: top center;
+            cursor: pointer;
+        }
+
+        .main {
+            position: absolute;
+            left: 150px;
+            top: 200px;
+        }
+
+        .suggest {
+            width: 395px;
+            height: auto;
+            padding-left: 5px;
+            line-height: 40px;
+            background-color: #fff;
+            position: absolute;
+            top: 48px;
+            /*display: none;*/
+        }
+
+        .suggest li:hover {
+            background-color: #eee;
+            cursor: pointer;
+        }
+
+        .changeStyle {
+            background-color: #eee;
+        }
+    </style>
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.js"></script>
+    <!--<script src="bing 搜索.js"></script>-->
+</head>
+
+<body>
+    <div class="desk">
+        <div class="main">
+            <div class="logo"></div>
+            <div id="seach_form" class="seach_form">
+                <input type="text" class="input_text" id="input_text" autocomplete="off" />
+                <input class="input_btn" value="" id="submit" />
+                <div class="suggest" id="search_suggest">
+                    <ul id="search_result">
+                        <!--<li>结果1</li>
+                        <li>结果2</li>
+                        <li>结果3</li>-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var key = '49295dbc48ec47c5a7f52c1502f8db7f';
+        var url = 'https://api.cognitive.microsoft.com/bing/v5.0/suggestions?q=';
+        var aimUrl = 'http://cn.bing.com/search?q=';
+        $(document).ready(function () {
+            //监听输入框,输入时发送请求,收到结果,推荐结果框显示
+            var timer = null;
+            var clientInput = '';
+            $('#input_text').on('input', function () {
+                // timer && clearTimeout(timer); // 如果timer为true就关闭定时器
+                clearTimeout(timer);//一定要记得关闭定时器,不然第一个定时器还没开始就开了第二个,这样会发送过多不必要的请求
+                // 延迟发送请求 过滤掉不必要的请求
+                if (!$('#input_text').val()) {
+                    $('#search_suggest').hide();
+                    return;
+                } else {
+                    timer = setTimeout(search, 300);
+                }
+                clientInput = $(this).val();
+            })
+
+            // 点击其他地方 搜索框消失
+            $(document).on('click', function () {
+                $('#search_suggest').hide();
+            })
+
+            //点击推荐词条 跳转到搜索结果页
+            $('#search_result').delegate('li', 'click', function () {
+                var resultPage = $(this).text();
+                location.href = aimUrl + resultPage;
+            })
+            // 点击搜索图标 跳转
+            var curInputText
+            $('#submit').on('click', function () {
+                curInputText = $('#input_text').val();
+                location.href = aimUrl + curInputText;
+            })
+            // 键盘事件 上下键
+            var num = -1;
+            $('#input_text').on('keydown', function (event) {
+                var keyCode = event.keyCode;
+                if (keyCode === 40 || keyCode === 38) {
+                    var len = $('#search_result li').length;
+                    if (keyCode === 40) {
+                        num = num === len - 1 ? -1 : ++num;
+                    } else {
+                        num = num === -1 ? len - 1 : --num;
+                    }
+                    $('#search_result li.changeStyle').removeClass('changeStyle');
+                    if (num !== -1) {
+                        var select = $('#search_result li').eq(num);
+                        select.addClass('changeStyle');
+                        $('#input_text').val(select.html());
+                    } else {
+                        $('#input_text').val(clientInput);
+                    }
+                }
+
+                // 点击回车 进行提交
+                if (keyCode === 13) {
+                    var sumbitText = '';
+                    if (num !== -1) {
+                        // 不等于1说明按了上下键 提交有class的
+                        sumbitText = $('#search_result li.changeStyle').text();
+                    } else {
+                        sumbitText = $('#input_text').val();
+                    }
+                    location.href = aimUrl + sumbitText;
+                }
+            })
+        })
+
+        function search() {
+            var inputContent = $('#input_text').val();
+            $.ajax({
+                url: url + inputContent,
+                type: 'GET',
+                headers: {
+                    'Ocp-Apim-Subscription-Key': key
+                },
+                dataType: 'json',
+                success: function (d) {
+                    var d = d.suggestionGroups[0].searchSuggestions;
+                    var html = '';
+                    // 转化称jq对象
+                    var $d = $(d)
+                    $d.each(function () {
+                        // 需要把返回的数据赋给新创建的html结构
+                        html += '<li>' + $(this)[0].displayText + '</li>';
+                    })
+                    $('#search_result').html(html);
+                    $('#search_suggest').show();
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

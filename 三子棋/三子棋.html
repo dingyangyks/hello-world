@@ -148,6 +148,7 @@
             if (!target.classList.contains('item')) {
                 return;//第一处 return用法
             }
+            
             //判断有没有落子，先计算点击的div是第几个div，以作为数组的下标
             var index;
             for (var i = 0; i < items.length; i++) {
@@ -166,6 +167,7 @@
                     clickNum++;
                 }
             }
+            console.log(clickNum);
 
             data[index] = clickNum % 2 === 0 ? "0" : "X";
             if (data[index] === "0") {

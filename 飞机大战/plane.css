@@ -1,0 +1,220 @@
+body{
+    margin: 0;
+    font-size: 20px;
+}
+
+.container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/*开始及背景模块*/
+.main{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(./img/start.png);
+    background-size: 100% 100%;
+}
+
+.main.run{
+    background-image: url(./img/run.png);
+    animation: scroll linear 3s infinite; 
+}
+
+.plane{
+    display: none;
+    position: absolute;
+}
+
+.main.run .plane{
+    display: block;
+}
+
+@keyframes scroll{
+    0%{
+        background-position: 0 0;
+    }
+    100%{
+        background-position: 0 667px;
+    }
+}
+
+#btn{
+    width: 200px;
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 30px;
+    background-color: #c3c8c9;
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    margin-left: -100px;
+    display: block;
+    cursor: pointer;
+}
+
+
+/*子弹*/
+.bullet{
+    width: 4px;
+    height: 16px;
+    position: absolute;
+    background-color: #893838;
+    /*display: none;*/
+    border-radius: 15px;
+}
+
+.enemy_planes{
+    display: none;
+}
+
+.enemy_plane1{
+    position: absolute;
+    width: 34px;
+    height: 24px;
+    background-image:url(img/plane1.png);
+}
+.plane1_boom{
+    position: absolute;
+    width: 34px;
+    height: 24px;
+    background-image:url(img/plane1_boom.gif);
+}
+
+.enemy_plane2{
+    position: absolute;
+    width: 46px;
+    height: 60px;
+    background-image:url(img/plane2.png);
+    left: 40px;
+}
+
+.enemy_plane3{
+    position: absolute;
+    width: 110px;
+    height: 164px;
+    background-image:url(img/plane3.png);
+    left: 100px;
+}
+
+/*暂停*/
+#wrap{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    position: absolute;
+    display: none;
+}
+
+.pause{
+    width: 60%;
+    height: 40%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+    border: 1px solid black;
+    border-radius: 15px;
+    background-color: #c3c8c9;
+    /*display: none;*/
+}
+
+.pause span{
+    display: inline-block;
+    position: absolute;
+    width: 70%;
+    font-size: 30px;
+    text-align: center;
+    transform: translate(-50%,70%);
+    left: 50%;
+}
+
+.pause div{
+    position: absolute;
+    width: 60%;
+    height: 11%;
+    font-size: 20px;
+    border: 1px solid black;
+    border-radius: 15px;
+    text-align: center;
+    line-height: 170%;
+}
+
+#continue{
+    transform: translate(-50%,367%);
+    left: 50%;
+}
+
+#restart{
+    transform: translate(-50%,614%);
+    left: 50%;
+}
+
+/*分数*/
+#score{
+    position: absolute;
+    display: none;
+    z-index: 99;
+}
+
+/*结束*/
+#gameOver{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    position: absolute;
+    display: none;
+}
+
+.over{
+    width: 60%;
+    height: 40%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+    border: 1px solid black;
+    border-radius: 15px;
+    background-color: #c3c8c9;
+    /*display: none;*/
+}
+
+.over span{
+    display: inline-block;
+    position: absolute;
+    width: 70%;
+    font-size: 30px;
+    text-align: center;
+    transform: translate(-50%,70%);
+    left: 50%;
+}
+
+.over div{
+    position: absolute;
+    width: 60%;
+    height: 11%;
+    font-size: 20px;
+    border: 1px solid black;
+    border-radius: 15px;
+    text-align: center;
+    line-height: 170%;
+}
+
+#endScore{
+    transform: translate(-50%,367%);
+    left: 50%;
+}
+
+#restart1{
+    transform: translate(-50%,614%);
+    left: 50%;
+}

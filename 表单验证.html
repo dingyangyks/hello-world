@@ -7,49 +7,194 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style type="text/css">
-        form {
-            width: 300px;
-            height: 200px;
-            margin: 0 auto;
-            background-color: sandybrown;
-            text-align: center;
-        }
-
-        input {
-            margin: 5px;
-        }
-
-        p {
+        body p {
+            font-size: 16px;
             margin: 0;
             padding: 0;
-            color: blue;
+        }
+
+        form {
+            width: 740px;
+            height: auto;
+            margin: 100px auto;
+            background-color: #ddd;
+            padding: 10px;
+            /*border: 1px solid red;*/
+        }
+
+        .row {
+            margin: 20px;
+        }
+
+        span {
+            display: inline-block;
+            width: 100px;
+            text-align: right;
+        }
+
+        .alertMeg {
+            display: inline-block;
+            color: red;
+            visibility: hidden;
+        }
+
+        #btn {
+            display: block;
+            margin: 0 0 0 100px;
+        }
+
+        #num {
+            padding-left: 100px;
+            margin: 5px 0 -17px 0;
+            color: #888;
+            visibility: hidden;
+        }
+
+        #level {
+            padding-left: 104px;
+            margin: 5px 0 -17px 0;
+        }
+
+        i {
+            width: 55px;
+            display: inline-block;
+            border: 1px solid orange;
         }
     </style>
 </head>
 
 <body>
-    <form>
-        <input type="text" placeholder="长度为4~16个字符" id="txt1">
-        <input type="button" value="验证" id="btn1">
-        <p id="p1">jhiuh</p>
-        <input type="text">
-        <input type="button" value="验证">
-        <input type="text">
-        <input type="button" value="验证">
+    <form method="GET">
+        <div class="row">
+            <label>
+                <span>会员名：</span>
+                <input type="text" class="text">
+            </label>
+            <p class="alertMeg">5-25个字符，一个汉字 为两个字符，推荐使用中文会员名</p>
+            <p id="num">
+            </p>
+        </div>
+        <div class="row">
+            <label>
+                 <span>登录密码：</span>
+                 <input type="password" class="text" maxlength="16">
+            </label>
+            <p class="alertMeg">6-16个字符，请使用数字字母或者符号组合密码</p>
+            </br>
+            <div id="level"><i>弱</i><i>中</i><i>强</i></div>
+        </div>
+        <div class="row">
+            <label>
+                 <span>确认密码：</span>
+                 <input type="password" class="text" maxlength="16">
+            </label>
+            <p class="alertMeg">请再次输入密码</p>
+        </div>
+        <div class="row">
+            <input type="button" value="注册并登录" id="btn">
+        </div>
     </form>
     <script type="text/javascript">
-        var txt1 = document.getElementById("txt1");
-        var btn1 = document.getElementById("btn1");
-        var p1 = document.getElementById("p1");
-        function hint() {
-            var txttxt = txt1.value;
-            txttxt = txttxt.replace(/^\s+|\s$/g, "").replace(/[\u0391-\uFFE5]/g, "*");
-            if (txttxt < 16 || txttxt > 4) {
-               prompt(pTxt,2);
-            }
-            alert(txttxt);
+        window.addEventListener('load', function () {
+            var aInput = document.getElementsByClassName('text');
+            var oName = aInput[0];
+            var oKey = aInput[1];
+            var reKey = aInput[2];
+
+            var ap = document.getElementsByTagName('p');
+            var name_mes = ap[0];
+            var key_mes = ap[2];
+            var reKey_mes = ap[3];
+
+            var num_mes = document.getElementById('num');
+            var aLevel = document.getElementsByTagName('i');
+
+            //用户名
+            oName.addEventListener('focus', function () {
+                name_mes.style.visibility = "visible";
+                
+            })
+
+            oName.addEventListener('keyup', function () {
+                num_mes.style.visibility = "visible";
+                num_mes.innerHTML = leng(this.value) + "个字符";
+                if(this.value.length === 0){
+                    name_mes.innerHTML = "5-25个字符，一个汉字 为两个字符，推荐使用中文会员名";
+                }
+                console.log(leng(this.value));
+            })
+
+            oName.addEventListener('blur', function () {
+                if (leng(this.value) >= 5 && leng(this.value) <= 25) {
+                    name_mes.innerHTML = "OK!";
+                } else {
+                    name_mes.innerHTML = "会员名输入有误！";
+                }
+            })
+
+            //密码框
+            oKey.addEventListener('focus', function () {
+                key_mes.style.visibility = "visible";
+            })
+
+            oKey.addEventListener('input', function () {
+                if (this.value.length === 0) {
+                    aLevel[0].style.backgroundColor = "";
+                } else if (this.value.length <= 8 && this.value.length > 0) {
+                    aLevel[0].style.backgroundColor = "orange";
+                    aLevel[1].style.backgroundColor = "";
+                } else if (this.value.length <= 12 && this.value.length > 8) {
+                    // aLevel[0].style.backgroundColor = "orange";
+                    aLevel[1].style.backgroundColor = "orange";
+                    aLevel[2].style.backgroundColor = "";
+                } else if (this.value.length > 12 && this.value.length < 16) {
+                    aLevel[2].style.backgroundColor = "orange";
+                } else if (this.value.length === 16) {
+                    key_mes.innerHTML = "最多只能输入16个字符！";
+                }
+            })
+
+
+            oKey.addEventListener('blur', function () {
+                key_mes.innerHTML = "6-16个字符，请使用数字字母或者符号组合密码";
+                var reg = /[0-9]+/gi;
+                var reg1 =/[a-z_]+/gi;
+                if (reg.test(this.value) && reg1.test(this.value)) {
+                    key_mes.innerHTML = "OK！"
+                }else if(this.value.length !== 0 && reg.test(this.value) ==false){
+                    key_mes.innerHTML = "请使用数字字母或者符号组合密码！"
+                }
+            })
+
+            reKey.addEventListener('focus',function(){
+                reKey_mes.style.visibility = "visible";
+            })
+
+            reKey.addEventListener('keyup',function(){
+                if(this.value !== oKey.value){
+                    reKey_mes.innerHTML = "两次密码不一致！";
+                }else{
+                    reKey_mes.innerHTML = "OK！"
+                }
+                if(this.value.length === 0){
+                    reKey_mes.innerHTML = "请再次输入密码！";
+                }
+            })
+
+            reKey.addEventListener('blur',function(){
+                
+            })
+
+        })
+
+
+        function leng(str) {
+            return str.replace(/[\u4E00-\u9FA5]/g, "xx").length;
         }
-        btn1.onclick = hint;
+
+        var reg = /[0-9]+[a-z_]+/gi;
+        var eee = "sadfkhadkjshfkj";
+        console.log(reg.test(eee));
     </script>
 </body>
 
