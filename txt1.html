@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>菜鸟教程(runoob.com)</title>
+  <style type="text/css">
+    #div1 {
+      width: 350px;
+      height: 70px;
+      padding: 10px;
+      border: 1px solid #aaaaaa;
+      position: absolute;
+      top: 0;
+      left: 0;
+      cursor: pointer;
+    }
+  </style>
+  
+</head>
+
+<body>
+  <div id="div1"></div>
+  <script>
+     var ball=document.getElementById('div1');
+     var move=function(event){
+         ball.style.left=event.clientX-x+'px';
+         ball.style.top=event.clientY-y+'px';
+       }
+     ball.addEventListener('mousedown',function(event){
+       var x=event.clientX-ball.offsetLeft;
+       var y=event.clientY-ball.offsetTop;
+        
+       ball.addEventListener('mousemove',move)
+       ball.addEventListener('mouseup',function(){
+         ball.removeEventListener('mousemove',move)
+       })
+     })
+  </script>
+
+
+</body>
+
+</html>
